@@ -1,16 +1,112 @@
-<!doctype html>
 
-<html lang="en">
-<head>
-  <meta charset="utf-8">
+<!-- saved from url=(0032)http://127.0.0.1:5500/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-  <title>Diana Ramirez</title>
-  <link rel="stylesheet" href="css/styles.css">
 
-</head>
+    
+    <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<body>
-  hello world
-  <script src="js/scripts.js"></script>
-</body>
-</html>
+    <title>Diana's Portfolio</title>
+    <!--fonts
+    font-family: 'Montserrat', sans-serif;
+font-family: 'Roboto Mono', sans-serif;
+font-family: 'Lobster', cursive;
+font-family: 'Comfortaa', cursive;
+-->
+    
+    <!--pages-->
+    
+    
+
+
+    <!-- the below three lines are a fix to get HTML5 semantic elements working in old versions of Internet Explorer-->
+    <!--[if lt IE 9]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+    <![endif]-->
+  <link href="./index_files/css" rel="stylesheet"><link rel="stylesheet" type="text/css" href="./index_files/styles.css"><link rel="stylesheet" type="text/css" href="./index_files/responsive.css"></head>
+
+  <body>
+    <div class="container">
+      <header>
+          <div class="headerBox">
+            <h1>Diana Ramirez</h1>
+            <h2>Front-End Ninja</h2>
+            <h3>Welcome to my Portfolio!</h3>
+            <img id="deskImage" src="./index_files/vAmOzP.png" alt="desk">
+          </div>
+      </header>
+
+      <nav>
+        <div class="navigationPanel">
+          <ul>
+            <li><a href="http://127.0.0.1:5500/index.html#">Home</a></li>
+            <li><a href="http://127.0.0.1:5500/index.html#">Graphic Designs</a></li>
+            <li><a href="http://127.0.0.1:5500/index.html#">Web Designs</a></li>
+            <li><a href="http://127.0.0.1:5500/index.html#">Contact</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <section class="featuredWork">
+          <h2>Featured Work</h2>
+            <div class="images-box">
+              <div class="imageCards" style="background-image:url(&#39;https://cdnw.nickpic.host/vAAZEs.png&#39;);">
+                <a href="https://www.behance.net/gallery/64018063/parrot-graphic"><h3>Graphic Design: Parrot Vector</h3></a>
+              </div>
+
+              <div class="imageCards" style="background-image:url(&#39;https://cdnw.nickpic.host/vAEISx.png&#39;);">
+                <a href="https://codepen.io/dianaramirez16/pen/mXevEz"><h3> Animal Trading Card</h3></a>
+              </div>
+
+              <div class="imageCards" style="background-image:url(&#39;https://cdnw.nickpic.host/vAAydQ.png&#39;);">
+                <a href="https://codepen.io/dianaramirez16/pen/geWvJv"></a><h3><a href="https://codepen.io/dianaramirez16/pen/geWvJv">App: Pixel Art Maker<!--3--></a>
+                </h3></div>
+            </div>
+      </section>
+
+    </div>
+
+    <footer>
+      <div class="footer-text">
+        <p id="footnote">Content copyright 2018 Diana Ramirez. Creative Commons License. </p>
+    </div></footer>
+  <!-- Code injected by live-server -->
+<script type="text/javascript">
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+
+</body></html>

@@ -1,0 +1,271 @@
+/*---add text decoration, visited links, disabled links(change cursor),  hover and active links*/
+
+
+body {
+  background-color: #eee2ff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='12' viewBox='0 0 20 12'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='charlie-brown' fill='%238c7ca5' fill-opacity='1'%3E%3Cpath d='M9.8 12L0 2.2V.8l10 10 10-10v1.4L10.2 12h-.4zm-4 0L0 6.2V4.8L7.2 12H5.8zm8.4 0L20 6.2V4.8L12.8 12h1.4zM9.8 0l.2.2.2-.2h-.4zm-4 0L10 4.2 14.2 0h-1.4L10 2.8 7.2 0H5.8z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #faeaff;
+  border-style: double;
+  border-width: 10px;
+  padding: 0px 80px;
+  display: flex;
+  flex-wrap: wrap;
+  -webkit-box-shadow: 10px 10px 31px 0px rgba(0,0,0,0.63);
+  -moz-box-shadow: 10px 10px 31px 0px rgba(0,0,0,0.63);
+  box-shadow: 10px 10px 31px 0px rgba(0,0,0,0.63);
+}
+/* -----------------------------header styles */
+.headerBox h1 {
+  
+	display: block;
+	position: relative;
+	font: 120px 'Lobster', cursive;
+	letter-spacing: -5px;
+	color: rgba(228, 53, 145,0.7);
+    height: 110px;
+}
+
+h1:after {
+	content: "Diana Ramirez";
+	position: absolute; left: 4px; top: 5px;
+	color: rgba(144, 53, 255,0.5);
+}
+/* end header ----- inline ---*/
+/*start sub ---- inline----*/
+
+.headerBox h2, .featuredWork h2 {
+  font-family: 'Roboto Mono', sans-serif;
+  font-size: 26px;
+  color: #4e3257;
+  display: inline;
+  margin:0px;
+  padding:0;
+}
+
+.headerBox h3 {
+  font: 24px 'Lobster', cursive;
+  letter-spacing: 1px;
+  color:  #faeaff;
+  height: 20px;
+  float:right;
+  text-shadow: 2px 2px 4px rgba(228, 53, 145);
+  margin: 0 0 15px;
+}
+
+#deskImage {
+  width: 100%;
+}
+
+
+
+/* ------------------------------navigation bar styling*/
+nav {
+  width:100%;
+  border: 3px double;
+  border-color: rgba(228, 53, 145,0.7);
+  margin: 0 0 25px;
+
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #ffd5d599;
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+}
+
+li {
+    float: left;
+    width: 25%;
+    font: 20px 'Lobster', cursive;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #fff;
+}
+
+/*------------------------------ card hover style */
+
+.imageCards div{
+    opacity: 0.5;
+    filter: alpha(opacity=50); /* For IE8 and earlier */
+}
+
+.imageCards div:hover {
+    opacity: 1.0;
+    filter: alpha(opacity=100); /* For IE8 and earlier */
+}
+
+/* ----------------------------------------- featured work && cards */
+
+.featuredWork{
+  width: 100%;
+  height: 300px;
+}
+
+.imageCards h3 {
+  line-height: 300px;
+  font-family: 'Roboto Mono', sans-serif;
+  font-size: 14px;
+}
+
+a:link {
+  color: hotpink;
+}
+a:visited {
+  color: rgba(0,0,0,0.7);
+}
+
+a:hover {
+  color: rgba(144, 53, 255,0.5);
+}
+
+a:active {
+    color: blue;
+}
+
+.imageCards {
+   float: left;
+   width: 30%;
+   margin: 1.5%;
+   height: 140px;
+   background-position: 70% 20%;
+   background-repeat:   no-repeat;
+   background-size:     cover;
+   outline: 4px outset;
+   outline-color: #bc5990;
+}
+
+
+#footnote {
+  font-size: 10px;
+  text-align: center;
+}
+
+
+/* media queries */
+
+@media screen and (max-width: 539px) {
+
+.container {
+  padding: 0px 25px;
+  margin: 0px;
+}
+  .headerBox h1 {
+    font: 70px 'Lobster', cursive;
+    height: inherit;
+  }
+
+  h1:after {
+    position: absolute; left: 3px; top: 3px;
+  }
+
+  .headerBox h3 {
+    font-size: 42px;
+    float:left;
+    line-height: 20px;
+    margin-bottom:30px;
+  }
+
+  .headerBox h2, .featuredWork h2 {
+    font-size: 30px;
+    display: block;
+    line-height: 20px;
+    margin-bottom: 40px;
+    text-decoration:underline;
+    color: rgb(156, 154, 154);
+  }
+
+  .featuredWork h2{
+      margin-top:40px;
+  }
+
+  .featuredWork h3{
+      font-size: 1.5em;
+  }
+
+  li {
+      width: 100%;
+      font: 24px 'Lobster', cursive;
+      border:solid transparent;
+  }
+
+  li a {
+    padding: 14px;
+  }
+  .imageCards {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 65px;
+  }
+  .imageCards h3{
+    line-height: 400px;
+  }
+.featuredWork {
+  height: inherit;
+}
+
+}
+
+@media screen and (min-width: 540px) and (max-width: 699px) {
+  .headerBox h1 {
+    font: 80px 'Lobster', cursive;
+    height: 60px;
+  }
+
+  h1:after {
+    position: absolute; left: 3px; top: 3px;
+  }
+
+  .container {
+    padding: 0px 30px;
+    margin: 0px;
+  }
+
+  li {
+    font: 17px 'Lobster', cursive;
+  }
+
+  .headerBox h3 {
+    font-size: 20px;
+    display: inline;
+    line-height: 20px;
+  }
+
+  .headerBox h2, .featuredWork h2 {
+    font-size: 20px;
+    display: block;
+    line-height: 20px;
+    margin-bottom: 16px;
+  }
+}
+
+
+@media screen and (min-width: 700px) and (max-width: 875px) {
+  .headerBox h1 {
+    font: 100px 'Lobster', cursive;
+    height: 100px;
+
+  }
+  .container {
+    padding: 0px 50px;
+    margin: 0px;
+  }
+}
