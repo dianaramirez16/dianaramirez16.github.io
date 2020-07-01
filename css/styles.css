@@ -160,7 +160,7 @@ a:active {
 }
 
 
-/* media queries */
+/* media queries smallest @top*/
 
 @media screen and (max-width: 539px) {
 
@@ -244,16 +244,16 @@ a:active {
   }
 
   .headerBox h3 {
-    font-size: 20px;
+    font-size: 28px;
     display: inline;
-    line-height: 20px;
+    line-height: 50px;
   }
 
   .headerBox h2, .featuredWork h2 {
     font-size: 20px;
-    display: block;
-    line-height: 20px;
-    margin-bottom: 16px;
+    display: inline;
+    line-height: 50px;
+    margin-bottom: 20px;
   }
 }
 
