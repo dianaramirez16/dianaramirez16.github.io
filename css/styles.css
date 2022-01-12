@@ -37,7 +37,7 @@ body {
   top:0;
   left:0;
   height: 100%;
-  width: 280px;
+  width: 300px;
   background: #1c1c1c;
   color: #e4d9ff;
   padding: 6px 14px;
@@ -90,6 +90,10 @@ body {
   line-height:50px;
   
 }
+
+.sidebar ul li .tooltip {
+  position:absolute;
+}
           
 .sidebar ul li a {   
   color: #fff;
@@ -101,7 +105,7 @@ body {
 }  
 
 .sidebar ul li a i{
-  height: 50px;
+  height: 40px;
   min-width: 50px;
   border-radius: 12px;
   line-height: 50px;
@@ -113,6 +117,7 @@ body {
   color:#fff;
   bottom: 0;
   left: 0;
+  width:100%;
 }
 
 .sidebar .profile_content .profile{
@@ -128,16 +133,40 @@ body {
   
 }
 
+.profile_content .profile .profile_details{
+  display:flex;
+  align-items: center;
+}
+
+.profile .profile_details img{
+  height: 45px;
+  width: 45px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+.profile .profile_details .name_job {
+  margin-left: 10px;
+}
+
+.profile .profile_details .name{
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.profile .profile_details .job{
+  font-size:12px;
+}
 /* --------------------------------------------------page styles */
 
 .container {
   margin: 0 auto;
-  padding: 80px 80px;
+  padding: 60px 100px;
   z-index: 100;  
 }
 
 .headerBox h1 {
 	display: block;
+  padding-left: -20px;
 	position: relative;
 	font: 60px 'Lobster', cursive;
 	letter-spacing: 0px;
