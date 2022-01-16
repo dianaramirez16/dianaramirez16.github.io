@@ -91,9 +91,7 @@ body {
   
 }
 
-.sidebar ul li .tooltip {
-  position:absolute;
-}
+
           
 .sidebar ul li a {   
   color: #fff;
@@ -206,6 +204,27 @@ a:visited {
   color: #52528c;
 }
 
+
+.sidebar ul li .tooltip {
+  position:absolute;
+  color: #343434;
+  left: 122px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 6px;
+  height: 35px;
+  width: 122px;
+  background: #fff;
+  line-height: 35px;
+  text-align: center;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+  transition: 0s;
+}
+
+.sidebar ul li:hover .tooltip {
+  transition: all 0.5s ease;
+  top: 50%;
+}
 
 #footnote {
   font-size: 10px;
