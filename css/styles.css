@@ -38,7 +38,7 @@ body {
   top:0;
   left:0;
   height: 100%;
-  width: 278px;
+  width: 78px;
   background: #1c1c1c;
   color: #e4d9ff;
   padding: 6px 14px;
@@ -47,7 +47,7 @@ body {
 }
 
 .sidebar.active {
-  width: 300px;
+  width: 278px;
 }
 
 .sidebar .logo_details .logo {
@@ -101,14 +101,14 @@ body {
 .sidebar ul li{
   position:  relative;
   list-style: none;
-  height: 50px;
+  height: 56px;
   width: 100%;
   margin: 0 5px;
-  line-height:50px;
-  
+  line-height:30px;
 }
 
 .sidebar ul li .tooltip {
+  z-index:101;
   position:absolute;
   color: #343434;
   left: 130px;
@@ -124,6 +124,11 @@ body {
   transition: 0s;
   opacity: 0;
   pointer-events: none;
+  display: block;
+}
+
+.sidebar:active ul li .tooltip {
+  display: none;
 }
 
 .sidebar ul li:hover .tooltip {
@@ -139,16 +144,30 @@ body {
   align-items:center;
   text-decoration: none;
   border-radius:12px;
+  transition: all 0.4s ease;
 }  
 
-.sidebar ul li a i{
+.sidebar ul li a:hover  {  
+  background-color: #ae85f1;
+  color: #fff;
+}
+
+.sidebar ul li i{
   height: 40px;
   min-width: 50px;
   border-radius: 12px;
-  line-height: 50px;
+  line-height: 40px;
   text-align: center;
 }
-          
+.sidebar .link_name{
+  opacity: 0;
+  pointer-events: none;
+}
+.sidebar.active .link_name{
+  opacity: 1;
+  pointer-events: auto;
+}
+
 .sidebar .profile_content {
   position:absolute;
   color:#fff;
@@ -164,11 +183,6 @@ body {
 }
 
 
-.sidebar ul li a:hover  {  
-  background-color: #372554;
-  color: #fff;
-  
-}
 
 .profile_content .profile .profile_details{
   display:flex;
