@@ -78,6 +78,7 @@ color: #52528c;
   width: 240px;
 }
 
+
 .sidebar .logo_details .logo {
   height: 50px;
   width: 100%;
@@ -88,7 +89,7 @@ color: #52528c;
   pointer-events: none;
 }
 
-.sidebar .active .logo_details .logo {
+.sidebar.active .logo_details .logo {
   opacity: 1;
   pointer-events: none;
 }
@@ -131,7 +132,6 @@ color: #52528c;
   list-style: none;
   height: 56px;
   width: 100%;
-
   line-height:30px;
 }
 
@@ -141,7 +141,7 @@ color: #52528c;
   color: #343434;
   left: 130px;
   top: 0;
-  transform: translateY(-50%);
+  transform: translate(-50% , -50%  );
   border-radius: 6px;
   height: 35px;
   width: 122px;
@@ -155,7 +155,7 @@ color: #52528c;
   display: block;
 }
 
-.sidebar:active ul li .tooltip {
+.sidebar.active ul li .tooltip {
   display: none;
 }
 
