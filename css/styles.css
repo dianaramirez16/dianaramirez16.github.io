@@ -56,9 +56,6 @@ li a {
   color: #e4d9ff;
 }
 
-a:visited {
-color: #52528c;
-}
 
 /*--------------------------------------------------------------sidebar styles */
 .sidebar {
@@ -81,7 +78,7 @@ color: #52528c;
 
 .sidebar .logo_details .logo {
   height: 50px;
-  width: 100%;
+  width: 60%;
   display: flex;
   align-items: center;
   color: #fafaff; 
@@ -94,14 +91,15 @@ color: #52528c;
   pointer-events: none;
 }
 
-.logo .logo_details i {
+.logo_details .logo i {
   font-size:28px;
   margin-right:5px;
-  width: 50px;
+  
+  left:50%;
 }
 
-.logo .logo_details .logo_name {
-  font-size:16px;
+.logo_details .logo_name {
+  font-size:18px;
   color: #e4d9ff;
   font-weight: 400;
 }
@@ -136,12 +134,11 @@ color: #52528c;
 }
 
 .sidebar ul li .tooltip {
-  z-index:101;
   position:absolute;
   color: #343434;
   left: 130px;
   top: 0;
-  transform: translate(-50% , -50%  );
+  transform: translate(-50% , -50% );
   border-radius: 6px;
   height: 35px;
   width: 122px;
@@ -159,7 +156,7 @@ color: #52528c;
   display: none;
 }
 
-.sidebar ul li:hover .tooltip {
+.sidebar ul li a:hover  .tooltip {
   transition: all 0.5s ease;
   top: 50%;
   opacity: 1;
