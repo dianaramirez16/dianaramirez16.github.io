@@ -143,12 +143,12 @@ li a {
   text-align: center;
   box-shadow: 0 5px 10px rgba(0,0,0,0.2);
   transition: 0s;
-  
+  display: none;
   pointer-events: none;
 }
 
 .sidebar.active ul li .tooltip {
-  display: none;
+  display: none !important;
 }
 
 .sidebar ul li a:hover {  
