@@ -157,12 +157,19 @@
       // Draw the arc for the right side of the mouth
       arc(x + 13, y + 4, 24 * 0.7, 47 * 0.7, radians(60), radians(258));
 
+            
       ellipse(x + 9, y + 11, 18 * 0.7, 30); // Right circle, scaled by 0.7
 
-
+      fill(0,0,255)
+      push();
+      translate(320, 340); // Move to the center of the rectangle
+      rotate(radians(15)); // Rotate by 15 degrees
+      rect(-5, -12.5, 10, 25); // Draw the rectangle (offset by half its width and height to keep it centered)
+      pop();
         // Call drawCurly within head with adjusted position
         //drawCurly(x-40, y+10,12);
         //drawCurly(x+56, y,19);
+
         
       }
 
