@@ -127,40 +127,43 @@
         }
       }
 
+            
       function head(x, y) {
         fill(255, 0, 0); // Set the fill color to red
-        noStroke();      // Disable stroke (borders)
+      noStroke();      // Disable stroke (borders)
 
-        // Draw the left ellipse rotated by -10 degrees (counterclockwise)
-        push();
-        translate(x, y); // Move to the center of the ellipse
-        rotate(radians(-10)); // Rotate by -10 degrees
-        ellipse(0, 0, 12, 30); // Draw the ellipse at the rotated position
-        pop();
+      // Draw the left ellipse rotated by -10 degrees (counterclockwise)
+      push();
+      translate(x, y); // Move to the center of the ellipse
+      rotate(radians(-10)); // Rotate by -10 degrees
+      ellipse(0, 0, 12 * 0.7, 30); // Draw the ellipse at the rotated position, scaled by 0.7
+      pop();
 
-        // Draw the right ellipse rotated by 10 degrees (clockwise)
-        push();
-        translate(x + 10, y); // Move to the center of the ellipse
-        rotate(radians(10)); // Rotate by 10 degrees
-        ellipse(0, 0, 12, 30); // Draw the ellipse at the rotated position
-        pop();
+      // Draw the right ellipse rotated by 10 degrees (clockwise)
+      push();
+      translate(x + 5, y); // Move to the center of the ellipse
+      rotate(radians(10)); // Rotate by 10 degrees
+      ellipse(0, 0, 12 * 0.7, 30 ); // Draw the ellipse at the rotated position, scaled by 0.7
+      pop();
 
-        circle(x + 5, y - 10, 14); // Draw the central circle (nose)
+      circle(x + 5, y-4, 14); // Draw the central circle (nose), scaled by 0.7
 
-        // Draw the circles below the ellipses
-        ellipse(x - 3, y + 10, 18, 30); // Left circle
+      // Draw the circles below the ellipses
+      ellipse(x - 3, y + 10, 18 * 0.7, 30 ); // Left circle, scaled by 0.7
 
-        // Draw the arc for the left side of the mouth
-        arc(x - 7, y + 4, 26, 48, radians(280), radians(132));
+      // Draw the arc for the left side of the mouth
+      arc(x - 7, y + 4, 26 * 0.7, 48 * 0.7, radians(280), radians(132));
 
-        // Draw the arc for the right side of the mouth
-        arc(x + 18, y + 4, 24, 47, radians(60), radians(258));
+      // Draw the arc for the right side of the mouth
+      arc(x + 13, y + 4, 24 * 0.7, 47 * 0.7, radians(60), radians(258));
 
-        ellipse(x + 13, y + 11, 18, 30); // Right circle
+      ellipse(x + 9, y + 11, 18 * 0.7, 30); // Right circle, scaled by 0.7
+
 
         // Call drawCurly within head with adjusted position
-        drawCurly(x - 40, y + 10, 12);
-        drawCurly(x + 56, y, 192);
+        //drawCurly(x-40, y+10,12);
+        //drawCurly(x+56, y,19);
+        
       }
 
       function drawCurly(x, y, rotation) {
