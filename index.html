@@ -4,17 +4,36 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
-    <title>Snake Animation</title>
+    <title>Personal Portfolio</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+    <!-- Page CSS -->
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+
+    <!-- Fix for older versions of IE -->
+    <!--[if lt IE 9]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+    <![endif]-->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+
     <!-- Add p5.js library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
   </head>
   <body>
+    <?php include("navigation.php"); ?>
+
     <div class="container">
       <header>
-        <h1>Snake Animation</h1>
+        <h1>Web Portfolio</h1>
+        <h2>Web Portfolio Test</h2>
+        <h3>Web Portfolio Test</h3>
       </header>
+
+      <p>Welcome to my portfolio website. Below is an interactive p5.js sketch featuring snakes!</p>
+      
       <!-- Placeholder for p5.js sketch -->
       <div id="myCanvas" style="border:2px solid tomato; width:600px; height:400px;"></div>
+      <p>Testing after canvas</p>
     </div>
 
     <!-- Add custom p5.js sketch -->
@@ -102,5 +121,7 @@
         }
       }
     </script>
+
+    <script src="js/script.js"></script>
   </body>
 </html>
