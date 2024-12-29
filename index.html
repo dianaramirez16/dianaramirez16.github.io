@@ -3,141 +3,80 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-
     <title>Personal Portfolio</title>
-    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
-    <!-- Page CSS -->
     <link rel="stylesheet" type="text/css" href="css/styles.css">
-
     <!-- Fix for older versions of IE -->
     <!--[if lt IE 9]>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
     <![endif]-->
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-
     <!-- Add p5.js library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
   </head>
   <body>
-    <?php include("navigation.php"); ?>
-
     <div class="container">
       <header>
-        <h1>Web Portfolio</h1>
-        <h2>Web Portfolio Test</h2>
-        <h3>Web Portfolio Test</h3>
+        <h1>Ms Diana's Web Portfolio</h1>
+        <h2>Interactive app made with p5.js</h2><br>
+        <h4>Click the dragons for more art</h4>
       </header>
-
-      <p>Welcome to my portfolio website. Below is an interactive p5.js sketch featuring snakes!</p>
       
       <!-- Placeholder for p5.js sketch -->
-      <div id="myCanvas" style="border:5px solid tomato; width:610px; height:410px;"></div>
-      <p>Testing after canvas</p>
+      <div id="myCanvas" style="border:5px solid tomato; width:1010px; height:520;">
+        
+      </div>
+      
     </div>
 
     <!-- Add custom p5.js sketch -->
     <script>
-      let snakes = [];
-
       function setup() {
-        const canvas = createCanvas(600, 400);
+        const canvas = createCanvas(1000, 450);
         canvas.parent('myCanvas');
         background(255);
-
-        // Create multiple snakes
-        
-        let l = getOddLength();
-        for (let i = 0; i < l; i++) {
-          snakes.push(new Snake(random(width), random(height), l));
-          l =  getOddLength();
-        }
-      }
-
-      function getOddLength(){
-        l = random(3,13)
-        if (l %2==1 ){
-          l+=1
-        }
-        return l;
       }
 
       function draw() {
         background(255, 255, 255, 25);
 
-        // Update and display each snake
-        for (let snake of snakes) {
-          snake.move();
-          snake.display();
-        }
+        // Draw the dragon head at the mouse position
+        head(mouseX, mouseY);
       }
 
-      class Ball {
-        constructor(x, y, r) {
-          this.x = x;
-          this.y = y;
-          this.r = r;
-        }
+            
+      function head(x,y) {
+        //x=100
+        //y=106
+        fill(255, 0, 0);  // Set the fill color to red
+        noStroke();        // Disable stroke (borders)
 
-        display(color) {
-          noStroke();
-          fill(color);
-          ellipse(this.x, this.y, this.r / 2);
-        }
-      }
+        // Draw the left ellipse rotated by -10 degrees (counterclockwise)
+        push();
+        translate(x, y); // Move to the center of the ellipse
+        rotate(radians(-10)); // Rotate by -10 degrees
+        ellipse(0, 0, 12, 30); // Draw the ellipse at the rotated position
+        pop();
+        
+        // Draw the right ellipse rotated by 10 degrees (clockwise)
+        push();
+        translate(x+10, y); // Move to the center of the ellipse
+        rotate(radians(10)); // Rotate by 10 degrees
+        ellipse(0, 0, 12, 30); // Draw the ellipse at the rotated position
+        pop();
+        
+        circle(x+5, y-10, 14);  // Draw the central circle (nose)
+        
+        // Draw the circles below the ellipses
+        ellipse(x-3, y+10, 18, 30);  // Left circle
 
-      class Snake {
-        constructor(x, y, length) {
-          this.segments = [];
-          this.color = color(random(240,255), random(0,50), random(0,50));
-          for (let i = 0; i < length; i++) {
-            this.segments.push(new Ball(x - i * 15, y, 10));
-          }
-          this.xSpeed = random(1, 3);
-          this.ySpeed = random(-1, 1);
-          this.zigzagAngle = 0;
-        }
+        // Draw the arc for the left side of the mouth
+        arc(x-7, y+4, 26, 48, radians(280), radians(132));
 
-        move() {
-          this.zigzagAngle += 0.1;
-          const dx = this.xSpeed;
-          const dy = this.ySpeed + sin(this.zigzagAngle) * 2;
-
-          // Move the head of the snake
-          this.segments[0].x += dx;
-          this.segments[0].y += dy;
-
-          // Update the positions of the other segments to follow the head
-          for (let i = 1; i < this.segments.length; i++) {
-            const prev = this.segments[i - 1];
-            const curr = this.segments[i];
-            const angle = atan2(prev.y - curr.y, prev.x - curr.x);
-            curr.x = prev.x - cos(angle) * 15;
-            curr.y = prev.y - sin(angle) * 15;
-          }
-
-          // Bounce off edges
-          if (this.segments[0].x < 0 || this.segments[0].x > width) {
-            this.xSpeed *= -1;
-          }
-          if (this.segments[0].y < 0 || this.segments[0].y > height) {
-            this.ySpeed *= -1;
-          }
-        }
-
-        display() {
-          for (let segment of this.segments) {
-            segment.display(this.color);
-          }
-        }
-
-
-      }
-
-      class Dragon {
-        constructor(x,y,){
-
-        }
+        // Draw the arc for the right side of the mouth
+        arc(x+18, y+4, 24, 47, radians(60), radians(258));
+        //fill(0,0,255);
+        ellipse(x+13, y+11, 18, 30); // Right circle
       }
     </script>
 
