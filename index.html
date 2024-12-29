@@ -5,14 +5,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
     <title>Personal Portfolio</title>
-    <!--fonts
-      font-family: 'Montserrat', sans-serif;
-      font-family: 'Roboto Mono', sans-serif;
-      font-family: 'Lobster', cursive;
-      font-family: 'Comfortaa', cursive;
-    -->.
-
-    <link href="https://fonts.googleapis.com/css?family==Lobster" rel="stylesheet">
+    <!--fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
     <!--page css-->
     <link rel="stylesheet" type="text/css" href="css/styles.css">
 
@@ -21,17 +15,85 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
     <![endif]-->
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- Add p5.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
   </head>
   <body>
-    <?php include("navigation.php"); ?>
 
-  <div class="container">
-    <header>
+    <div class="container">
+      <header>
         <h1>Web Portfolio</h1>
         <h2>web portfolio test</h2>
         <h3>web portfolio test</h3>
-    </header>
-   </div>
-   <script src="js/script.js"></script>
-</body>
+      </header>
+      test
+      <!-- Placeholder for p5.js sketch -->
+      <div id="myCanvas" style="border:2px solid tomato; width:600px; height:400px;"></div>
+      testing after canvas
+    </div>
+
+    <!-- Add custom p5.js sketch -->
+    <script>
+      let balls = [];
+
+      function setup() {
+        const canvas = createCanvas(600, 400); // Canvas size
+        canvas.parent('myCanvas'); // Attach to the div with id "myCanvas"
+        background(30); // Dark background
+      }
+
+      function draw() {
+        // Faintly fade the previous frames for a cool trail effect
+        background(30, 30, 30, 25);
+
+        // Update and display all the balls
+        for (let ball of balls) {
+          ball.move();
+          ball.display();
+        }
+      }
+
+      // Add a new ball at the mouse position when the mouse is clicked
+      function mousePressed() {
+        let ball = new Ball(mouseX, mouseY, random(10, 30));
+        balls.push(ball);
+      }
+
+      // Ball class
+      class Ball {
+        constructor(x, y, r) {
+          this.x = x;
+          this.y = y;
+          this.r = r;
+          this.xSpeed = random(-3, 3);
+          this.ySpeed = random(-3, 3);
+          this.color = color(random(255), random(255), random(255)); // Random color
+        }
+
+        // Move the ball
+        move() {
+          this.x += this.xSpeed;
+          this.y += this.ySpeed;
+
+          // Bounce off edges
+          if (this.x < 0 || this.x > width) {
+            this.xSpeed *= -1;
+          }
+          if (this.y < 0 || this.y > height) {
+            this.ySpeed *= -1;
+          }
+        }
+
+        // Display the ball
+        display() {
+          noStroke();
+          fill(this.color);
+          ellipse(this.x, this.y, this.r * 2, this.r * 2);
+        }
+      }
+    </script>
+
+    <script src="js/script.js"></script>
+  </body>
 </html>
