@@ -129,121 +129,111 @@
       }
 
       function head(x, y) {
-        fill(255, 0, 0); // Set the fill color to red
-        noStroke();      // Disable stroke (borders)
+  fill(255, 0, 0); // Set the fill color to red
+  noStroke();      // Disable stroke (borders)
 
-        // Draw the left ellipse rotated by -10 degrees (counterclockwise)
-        push();
-        translate(x, y); // Move to the center of the ellipse
-        rotate(radians(-10)); // Rotate by -10 degrees
-        ellipse(0, 0, 12 * 0.7, 30); // Draw the ellipse at the rotated position, scaled by 0.7
-        pop();
+  // Draw the left ellipse rotated by -10 degrees (counterclockwise)
+  push();
+  translate(x, y); // Move to the center of the ellipse
+  rotate(radians(-10)); // Rotate by -10 degrees
+  ellipse(0, 0, 12 * 0.7, 30); // Draw the ellipse at the rotated position, scaled by 0.7
+  pop();
 
-        // Draw the right ellipse rotated by 10 degrees (clockwise)
-        push();
-        translate(x + 5, y); // Move to the center of the ellipse
-        rotate(radians(10)); // Rotate by 10 degrees
-        ellipse(0, 0, 12 * 0.7, 30 ); // Draw the ellipse at the rotated position, scaled by 0.7
-        pop();
+  // Draw the right ellipse rotated by 10 degrees (clockwise)
+  push();
+  translate(x + 5, y); // Move to the center of the ellipse
+  rotate(radians(10)); // Rotate by 10 degrees
+  ellipse(0, 0, 12 * 0.7, 30 ); // Draw the ellipse at the rotated position, scaled by 0.7
+  pop();
 
-        circle(x + 2, y - 6, 14); // Draw the central circle (nose), scaled by 0.7
+  circle(x + 2, y - 6, 14); // Draw the central circle (nose), scaled by 0.7
 
-        // Draw the circles below the ellipses
-        ellipse(x - 3, y + 10, 18 * 0.7, 30 ); // Left circle, scaled by 0.7
+  // Draw the circles below the ellipses
+  ellipse(x - 3, y + 10, 18 * 0.7, 30 ); // Left circle, scaled by 0.7
 
-        // Draw the arc for the left side of the mouth
-        arc(x - 7, y + 4, 26 * 0.7, 48 * 0.7, radians(280), radians(132));
+  // Draw the arc for the left side of the mouth
+  arc(x - 7, y + 4, 26 * 0.7, 48 * 0.7, radians(280), radians(132));
 
-        // Draw the arc for the right side of the mouth
-        arc(x + 13, y + 4, 24 * 0.7, 47 * 0.7, radians(60), radians(258));
+  // Draw the arc for the right side of the mouth
+  arc(x + 13, y + 4, 24 * 0.7, 47 * 0.7, radians(60), radians(258));
 
-        ellipse(x + 9, y + 11, 18 * 0.7, 30); // Right circle, scaled by 0.7
+  ellipse(x + 9, y + 11, 18 * 0.7, 30); // Right circle, scaled by 0.7
 
-        // Horns
-        push();
-        translate(308, 354);
-        rotate(radians(17));
-        rect(-5, -12.5, 6, 15);
-        pop();
+  // Horns
+  push();
+  translate(x-11, y+32);
+  rotate(radians(17));
+  rect(-5, -12.5, 6, 15);
+  pop();
 
-        push();
-        translate(298, 368);
-        rotate(radians(-17));
-        rect(45, -12.5, 6, 15);
-        pop();
+  push();
+  translate(x-24, y+44); //10 less, 14 more 
+  rotate(radians(-17));
+  rect(45, -12.5, 6, 15);
+  pop();
 
-        drawHorn(x - 50, y - 14, 15); // Calling the drawHorn function
-      }
+  drawHorn(x - 48, y - 50, 14); // Calling the drawHorn function
+}
 
-      function drawHorn(x, y, angle) {
-        let scaleFactor = 0.75; // Scaling factor
-        
-        fill('red');
-        // Draw the circle at the new position, considering the offset, scale, and rotation
-        let rotatedCircleX = 72 * scaleFactor + x;
-        let rotatedCircleY = 65 * scaleFactor + y;
+function drawHorn(x, y, angle) {
+  let scaleFactor = 0.75; // Scaling factor
+  
+  fill('red');
+  
+  let horn_pox = x - 10;
+  let horn2_pox = x + 11;
+  
+  // Draw the first curly shape near the left horn
+  drawCurly(horn_pox + 16, y + 4, angle - 4, 0.75, false, 'red', 'red', 2);
+  
+  // Draw the second curly shape near the right horn
+  drawCurly(horn2_pox + 8, y - 42, angle + 9, 1, false, 'none', 'red', 2.9);
+  fill(255)
+  //drawCurly(x-4,y-32,angle+4,1.1,false,255,255,2)
+  
+}
 
-        // Apply rotation to the circle's center position
-        let circleX = rotatedCircleX * cos(radians(angle)) - rotatedCircleY * sin(radians(angle));
-        let circleY = rotatedCircleX * sin(radians(angle)) + rotatedCircleY * cos(radians(angle));
+function drawCurly(x, y, angle, scaleFactor = 2, flip = false, fillColor = 'none', strokeColor = 'blue', strokeWidth = 3) {
+  let points = [68, 45, 69, 52, 68, 55, 65, 61.5, 64, 66, 66, 70.5,
+                70, 77, 71, 83, 71, 89];
 
-        circle(circleX + 2, circleY + 1, 13 * scaleFactor);
-        
-        // Calling drawCurly after the horn
-        drawCurly(x, y, angle);
-      }
+  // Scale points
+  for (let i = 0; i < points.length; i++) {
+    points[i] *= scaleFactor;
+  }
 
-      function drawCurly(x, y, angle) {
-        let points = [67, 45, 69, 52, 69, 55, 65, 61.5, 64, 66, 66, 70.5,
-                      70, 77, 71, 83, 70, 89];
+  // Adjust position
+  for (let i = 0; i < points.length; i += 2) {
+    points[i] += x;
+    points[i + 1] += y;
+  }
 
-        // Scaling factor to scale the drawing by 25% (75% of the original size)
-        let scaleFactor = 0.75;
+  // Apply rotation and flip
+  let rotatedPoints = [];
+  for (let i = 0; i < points.length; i += 2) {
+    let xPos = points[i];
+    let yPos = points[i + 1];
+    let rotatedX = xPos * cos(radians(angle)) - yPos * sin(radians(angle));
+    let rotatedY = xPos * sin(radians(angle)) + yPos * cos(radians(angle));
+    if (flip) rotatedX = -rotatedX;
+    rotatedPoints.push(rotatedX, rotatedY);
+  }
 
-        // Scale down the points
-        for (let i = 0; i < points.length; i++) {
-          points[i] *= scaleFactor;  // Scale each x and y coordinate by 0.75
-        }
+  // Set colors and stroke
+  fill(fillColor);
+  stroke(strokeColor);
+  strokeWeight(strokeWidth);
 
-        // Adjust each point by the x and y offsets to move the shape
-        for (let i = 0; i < points.length; i += 2) {
-          points[i] += x;     // Add x to all x-coordinates
-          points[i + 1] += y; // Add y to all y-coordinates
-        }
+  // Draw shape
+  push();
+  beginShape();
+  for (let i = 0; i < rotatedPoints.length; i += 2) {
+    curveVertex(rotatedPoints[i], rotatedPoints[i + 1]);
+  }
+  endShape();
+  pop();
+}
 
-        // Apply rotation to each point
-        let rotatedPoints = [];
-        for (let i = 0; i < points.length; i += 2) {
-          let xPos = points[i];
-          let yPos = points[i + 1];
-
-          // Apply rotation using the angle in radians
-          let rotatedX = xPos * cos(radians(angle)) - yPos * sin(radians(angle));
-          let rotatedY = xPos * sin(radians(angle)) + yPos * cos(radians(angle));
-
-          rotatedPoints.push(rotatedX);
-          rotatedPoints.push(rotatedY);
-        }
-
-        noFill();
-        stroke('blue');
-        strokeWeight(3);
-
-        push(); // Save the current transformation state
-
-        beginShape(); // Begin drawing the curve
-
-        // Loop through the rotated array two elements at a time (x, y pairs)
-        for (let i = 0; i < rotatedPoints.length; i += 2) {
-          let xPos = rotatedPoints[i];
-          let yPos = rotatedPoints[i + 1];
-          curveVertex(xPos, yPos); // Add each point to the curve
-        }
-
-        endShape();
-
-        pop();
-      }
     </script>
 
     <script src="js/script.js"></script>
