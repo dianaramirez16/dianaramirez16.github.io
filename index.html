@@ -101,8 +101,8 @@
 
   move() {
     this.zigzagAngle += 0.1;
-    const dx = this.xSpeed;
-    const dy = this.ySpeed + sin(this.zigzagAngle) * 2;
+    const dx = sin(this.zigzagAngle) * 2; // Zigzag horizontally
+    const dy = -1; // Move upward
 
     // Move the head of the snake
     this.segments[0].x += dx;
@@ -110,21 +110,23 @@
 
     // Update the positions of the other segments to follow the head
     for (let i = 1; i < this.segments.length; i++) {
-      const prev = this.segments[i - 1];
-      const curr = this.segments[i];
-      const angle = atan2(prev.y - curr.y, prev.x - curr.x);
-      curr.x = prev.x - cos(angle) * 15;
-      curr.y = prev.y - sin(angle) * 15;
+        const prev = this.segments[i - 1];
+        const curr = this.segments[i];
+        const angle = atan2(prev.y - curr.y, prev.x - curr.x);
+        curr.x = prev.x - cos(angle) * 15;
+        curr.y = prev.y - sin(angle) * 15;
     }
 
-    // Bounce off edges
-    if (this.segments[0].x < 0 || this.segments[0].x > width) {
-      this.xSpeed *= -1;
+    // Reset position if the snake moves off the top of the canvas
+    if (this.segments[0].y < -30) {
+        const newX = random(width);
+        const newY = height + 30;
+        for (let i = 0; i < this.segments.length; i++) {
+            this.segments[i].x = newX - i * 15;
+            this.segments[i].y = newY;
+        }
     }
-    if (this.segments[0].y < 0 || this.segments[0].y > height) {
-      this.ySpeed *= -1;
-    }
-  }
+}
 
   display() {
     // Calculate the direction of the snake's head (first ball in the list)
@@ -139,50 +141,48 @@
 
     // Display the head with rotation based on the movement direction
     this.segments[0].display(this.color);
-    head(this.segments[0].x, this.segments[0].y, degrees(rotation), 1);
+    head(this.segments[0].x, this.segments[0].y, 10);
   }
 }
 
-
-      function head(x, y, rotation, scaleFactor = 1) {
+function head(x, y, rotation) {
   fill(255, 0, 0); // Set the fill color to red
   stroke('pink');
-  //line(0, y, 800, y);
   noStroke(); // Disable stroke (borders)
-  
+
   // Draw the left ellipse rotated by -10 degrees (counterclockwise)
   push();
   translate(x, y); // Move to the center of the ellipse
   rotate(radians(-10 + rotation)); // Apply the rotation
-  ellipse(0, 0, 12 * scaleFactor, 30 * scaleFactor); // Draw the ellipse at the rotated position, scaled by scaleFactor
+  ellipse(0, 0, 12, 30); // Draw the ellipse at the rotated position
   pop();
 
   // Draw the right ellipse rotated by 10 degrees (clockwise)
   push();
-  translate(x + 5 * scaleFactor, y); // Move to the center of the ellipse
+  translate(x + 5, y); // Move to the center of the ellipse
   rotate(radians(10 + rotation)); // Apply the rotation
-  ellipse(0, 0, 12 * scaleFactor, 30 * scaleFactor); // Draw the ellipse at the rotated position, scaled by scaleFactor
+  ellipse(0, 0, 12, 30); // Draw the ellipse at the rotated position
   pop();
 
-  circle(x + 2 * scaleFactor, y - 6 * scaleFactor, 14 * scaleFactor); // Draw the central circle (nose), scaled
+  circle(x + 2, y - 6, 14); // Draw the central circle (nose)
 
   // Draw the circles below the ellipses
-  ellipse(x - 3 * scaleFactor, y + 10 * scaleFactor, 18 * scaleFactor, 30 * scaleFactor); // Left circle, scaled
+  ellipse(x - 3, y + 10, 18, 30); // Left circle
 
   // Draw the arc for the left side of the mouth
-  arc(x - 7 * scaleFactor, y + 4 * scaleFactor, 26 * scaleFactor, 48 * scaleFactor, radians(280), radians(132));
+  arc(x - 7, y + 4, 26, 48, radians(280), radians(132));
 
   // Draw the arc for the right side of the mouth
-  arc(x + 13 * scaleFactor, y + 4 * scaleFactor, 24 * scaleFactor, 47 * scaleFactor, radians(60), radians(258));
+  arc(x + 13, y + 4, 24, 47, radians(60), radians(258));
 
-  ellipse(x + 9 * scaleFactor, y + 11 * scaleFactor, 18 * scaleFactor, 30 * scaleFactor); // Right circle, scaled
+  ellipse(x + 9, y + 11, 18, 30); // Right circle
 
   // Draw the horn on the left side
-  drawHorn((x - 68) * scaleFactor, (y - 30) * scaleFactor, 13, false, scaleFactor); // Left side horn
-  drawHorn((x - 50) * scaleFactor, (y - 40) * scaleFactor, 17, false, scaleFactor); // Inner left
-  
-  drawHorn((x + 11) * scaleFactor, (y - 20) * scaleFactor, 9, true, scaleFactor); // Outer right
-  drawHorn((x - 3) * scaleFactor, (y - 27) * scaleFactor, 11, true, scaleFactor); // Inner right
+  drawHorn(x - 68, y - 30, 13, false); // Left side horn
+  drawHorn(x - 50, y - 40, 17, false); // Inner left
+
+  drawHorn(x + 11, y - 20, 9, true); // Outer right
+  drawHorn(x - 3, y - 27, 11, true); // Inner right
 }
 
 function drawHorn(x, y, angle, flip, scale) {
