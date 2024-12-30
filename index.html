@@ -78,7 +78,8 @@
         display(color) {
           noStroke();
           fill(color);
-          ellipse(this.x, this.y, this.r / 1.5);
+          //ellipse(this.x, this.y, this.r / 1.5);
+          head(this.x,this.y)
         }
       }
 
@@ -128,7 +129,7 @@
         }
       }
 
-      function head(x, y) {
+function head(x, y) {
   fill(255, 0, 0); // Set the fill color to red
   stroke('pink')
   line(0,y,800,y);
@@ -214,9 +215,6 @@ function drawHorn(x, y, angle, flip, scale) {
   // Optionally draw other shapes (e.g., another curly shape)
   // drawCurly(x-4, y-32, angle+4, 1.1, false, 255, 255, 2)
 }
-
-
-
 function drawCurly(x, y, angle, scaleFactor = 2, flip = false, strokeColor = 'blue', strokeWidth) {
   let points = [68, 45, 69, 52, 68, 55, 65, 61.5, 64, 66, 66, 70.5,
                 70, 77, 71, 83, 71, 89];
