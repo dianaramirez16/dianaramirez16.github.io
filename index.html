@@ -110,7 +110,8 @@
 
       class Dragon {
         constructor(x, y, length) {
-          this.snake = new Snake(x, y, length); // The dragon contains a snake
+          this.snakeColor = color(random(250, 255), random(0, 100), random(0, 100)); // Assign color here
+          this.snake = new Snake(x, y, length,this.snakeColor); // The dragon contains a snake
         }
 
         move() {
@@ -119,6 +120,74 @@
 
         display() {
           this.snake.display(); // Display the snake, which also includes the head
+
+          this.drawHorn(this.snake.segments[0].x, this.snake.segments[0].y - 30, 30, false, 1, this.snakeColor);
+          this.drawHorn(this.snake.segments[0].x, this.snake.segments[0].y - 30, -30, true, 1, this.snakeColor);
+  
+        }
+
+        drawHorn(x, y, angle, flip, scale, colorH) {
+          let scaleFactor = 0.8 * scale; 
+
+          let horn_pox = x - 10;
+          let horn2_pox = x + 11;
+          noFill();
+
+          push();
+          translate(horn_pox + 18, y + 4);
+          if (flip) {
+            this.drawCurly(-27, 17, angle, 0.5, true, colorH, 3); 
+          } else {
+            this.drawCurly(0, 0, angle - 5, 0.75, false, 'limegreen', 4);
+          }
+          pop();
+
+          push();
+          translate(horn2_pox, y - 20);
+          if (flip) {
+            this.drawCurly(-47, 0, angle + 6, 1, true, 'red', 2.5); 
+          } else {
+            this.drawCurly(0, 0, angle + 5, 1, false, 'blue', 2.5);
+          }
+          pop();
+        }
+
+        // Method to draw the curly part of the horns
+        drawCurly(x, y, angle, scaleFactor = 2, flip = false, strokeColor, strokeWidth) {
+          let points = [68, 45, 69, 52, 68, 55, 65, 61.5, 64, 66, 66, 70.5,
+                        70, 77, 71, 83, 71, 89];
+
+          for (let i = 0; i < points.length; i++) {
+            points[i] *= scaleFactor;
+          }
+
+          for (let i = 0; i < points.length; i += 2) {
+            points[i] += x;
+            points[i + 1] += y;
+          }
+
+          let rotatedPoints = [];
+          for (let i = 0; i < points.length; i += 2) {
+            let xPos = points[i];
+            let yPos = points[i + 1];
+            let rotatedX = xPos * cos(radians(angle)) - yPos * sin(radians(angle));
+            let rotatedY = xPos * sin(radians(angle)) + yPos * cos(radians(angle));
+            if (flip) rotatedX = -rotatedX; 
+            rotatedPoints.push(rotatedX, rotatedY);
+          }
+
+          noFill();
+          
+          stroke(strokeColor);
+          strokeWeight(strokeWidth);
+
+          push();
+          beginShape();
+          for (let i = 0; i < rotatedPoints.length; i += 2) {
+            curveVertex(rotatedPoints[i], rotatedPoints[i + 1]);
+          }
+          endShape();
+          pop();
         }
 
         
@@ -151,7 +220,7 @@
             const curr = this.segments[i];
             const angle = atan2(prev.y - curr.y, prev.x - curr.x);
             curr.x = prev.x - cos(angle) * 15;
-            curr.y = prev.y - sin(angle) * 15;
+            curr.y = prev.y - sin(angle) * 15;  
           }
 
           // Reset position if the snake moves off the top of the canvas
