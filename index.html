@@ -47,7 +47,7 @@
       }
 
       function draw() {
-        background(255, 255, 255, 25);
+        background(255, 255, 255,99);
 
         // Update and display each snake
         for (let snake of snakes) {
@@ -57,26 +57,57 @@
       }
 
       class Ball {
-        constructor(x, y, r, color) {
-          this.x = x;
-          this.y = y;
-          this.r = r;
-          this.color = color;  // Set the color when the Ball is created
-        }
-
-        display() {
-          noStroke();
-          fill(this.color); // Use the color passed into the constructor
-          ellipse(this.x, this.y, this.r);
-
-          // Optional additional ellipses
-          fill('yellow');  
-          ellipse(this.x, this.y, this.r - 5);  // Smaller ellipse inside
-
-          fill('red');  
-          ellipse(this.x, this.y, this.r - 10);  // Another smaller ellipse
-        }
+      constructor(x, y, r, color) {
+        this.x = x;
+        this.y = y;
+        this.r = r+3;
+        this.color = color;  // Set the color when the Ball is created
       }
+
+      display() {
+        noStroke();
+        fill(this.color); // Use the color passed into the constructor
+        ellipse(this.x, this.y, this.r);
+        rect(this.x - this.r / 2 + 2, this.y - this.r / 2, this.r - 5, this.r - 10);
+      
+        this.drawMultipleArcs(this.x, this.y-3);
+        this.drawRowThree(this.x, this.y-3);
+        this.drawMultipleArcs(this.x, this.y+8);
+      }
+
+      // Function to draw multiple arcs with two colors, ensuring they stay within the radius
+      drawMultipleArcs(x, y) {
+        // Draw the first arc (color 1)
+        fill('gold');
+        arc(x - 5, y - 4, this.r / 2.5, this.r / 2.5, radians(0), radians(180));
+        arc(x + 4, y - 4, this.r / 2.5, this.r / 2.5, radians(0), radians(180));
+
+        // Draw the second arc (color 2)
+        fill(this.color);
+        arc(x - 5, y - 4, this.r / 3.5, this.r / 3.5, radians(0), radians(180));
+        arc(x + 4, y - 4, this.r / 3.5, this.r / 3.5, radians(0), radians(180));
+      }
+
+      // Function to draw a row of arcs with a more constrained layout
+      drawRowThree(x, y) {
+        // Adjust positions to ensure they stay within the bounds of the ball
+        const offsetY = 1; // Vertical offset to prevent arcs from overlapping the top part of the ball
+        const maxXOffset = this.r / 3.5; // Limit horizontal movement within radius
+
+        // Draw first set of arcs (green)
+        fill('gold');
+        arc(x - maxXOffset, y + offsetY-1, this.r / 2.5, this.r / 1.5, radians(0), radians(180));
+        arc(x, y + offsetY-1, this.r / 2.5, this.r / 1.5, radians(0), radians(180));
+        arc(x + maxXOffset, y + offsetY-1, this.r / 2.5, this.r / 1.5, radians(0), radians(180));
+
+        // Draw second set of arcs (purple)
+        fill(this.color);
+        arc(x - maxXOffset, y + offsetY, this.r / 3.5, this.r / 2.5, radians(0), radians(180));
+        arc(x, y + offsetY, this.r / 3.5, this.r / 2.5, radians(0), radians(180));
+        arc(x + maxXOffset, y + offsetY, this.r / 3.5, this.r / 2.5, radians(0), radians(180));
+      }
+    }
+
 
       class Snake {
         constructor(x, y, length) {
