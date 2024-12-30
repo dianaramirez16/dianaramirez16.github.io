@@ -6,10 +6,6 @@
     <title>Personal Portfolio</title>
     <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
-    <!-- Fix for older versions of IE -->
-    <!--[if lt IE 9]>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
-    <![endif]-->
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <!-- Add p5.js library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
@@ -23,20 +19,13 @@
       </header>
       
       <!-- Placeholder for p5.js sketch -->
-      <div id="myCanvas" style="border:5px solid tomato; width:1010px; height:500;">
-        
-      </div>
-      
+      <div id="myCanvas" style="border:5px solid tomato; width:1010px; height:500;"></div>
     </div>
 
-    <!-- Add custom p5.js sketch -->
     <script>
       let snakes = [];
-      let globalColor;
 
       function setup() {
-        globalColor = color('tomato');
-
         const canvas = createCanvas(1000, 490);
         canvas.parent('myCanvas');
         background(255);
@@ -65,200 +54,181 @@
           snake.move();
           snake.display();
         }
-        push();
-        //head(120, 120); // Call head, passing x and y
-        pop();
-        head(mouseX, mouseY);
       }
 
       class Ball {
-        constructor(x, y, r,color) {
+        constructor(x, y, r, color) {
           this.x = x;
           this.y = y;
           this.r = r;
-          this.color =color;
+          this.color = color;  // Set the color when the Ball is created
         }
 
         display() {
           noStroke();
-          //fill(globalColor);
+          fill(this.color); // Use the color passed into the constructor
           ellipse(this.x, this.y, this.r);
-          //head(this.x,this.y)
+
+          // Optional additional ellipses
+          fill('yellow');  
+          ellipse(this.x, this.y, this.r - 5);  // Smaller ellipse inside
+
+          fill('red');  
+          ellipse(this.x, this.y, this.r - 10);  // Another smaller ellipse
         }
       }
 
       class Snake {
-  constructor(x, y, length) {
-    this.segments = [];
-    this.color = color(random(240, 255), random(0, 100), random(0, 150));
-    for (let i = 0; i < length; i++) {
-      this.segments.push(new Ball(x - i * 15, y, 26,));
-    }
-    this.xSpeed = random(1, 3);
-    this.ySpeed = random(-1, 1);
-    this.zigzagAngle = 0;
-  }
-
-  move() {
-    this.zigzagAngle += 0.1;
-    const dx = sin(this.zigzagAngle) * 2; // Zigzag horizontally
-    const dy = -1; // Move upward
-
-    // Move the head of the snake
-    this.segments[0].x += dx;
-    this.segments[0].y += dy;
-
-    // Update the positions of the other segments to follow the head
-    for (let i = 1; i < this.segments.length; i++) {
-        const prev = this.segments[i - 1];
-        const curr = this.segments[i];
-        const angle = atan2(prev.y - curr.y, prev.x - curr.x);
-        curr.x = prev.x - cos(angle) * 15;
-        curr.y = prev.y - sin(angle) * 15;
-    }
-
-    // Reset position if the snake moves off the top of the canvas
-    if (this.segments[0].y < -30) {
-        const newX = random(width);
-        const newY = height + 30;
-        for (let i = 0; i < this.segments.length; i++) {
-            this.segments[i].x = newX - i * 15;
-            this.segments[i].y = newY;
+        constructor(x, y, length) {
+          this.segments = [];
+          this.color = color(random(240, 255), random(0, 100), random(0, 150));
+          for (let i = 0; i < length; i++) {
+            this.segments.push(new Ball(x - i * 15, y, 21, this.color)); // Pass the snake color to each Ball
+          }
+          this.xSpeed = random(1, 3);
+          this.ySpeed = random(-1, 1);
+          this.zigzagAngle = 0;
         }
-    }
-}
 
-  display() {
-    // Calculate the direction of the snake's head (first ball in the list)
-    const dx = this.segments[0].x - this.segments[1].x;
-    const dy = this.segments[0].y - this.segments[1].y;
-    let rotation = atan2(dy, dx); // Get the angle of movement
+        move() {
+          this.zigzagAngle += 0.1;
+          const dx = sin(this.zigzagAngle) * 2; // Zigzag horizontally
+          const dy = -1; // Move upward
 
-    // Display each segment
-    for (let segment of this.segments) {
-      segment.display(this.color);
-    }
+          // Move the head of the snake
+          this.segments[0].x += dx;
+          this.segments[0].y += dy;
 
-    // Display the head with rotation based on the movement direction
-    this.segments[0].display(this.color);
-    head(this.segments[0].x, this.segments[0].y, 10);
-  }
-}
+          // Update the positions of the other segments to follow the head
+          for (let i = 1; i < this.segments.length; i++) {
+              const prev = this.segments[i - 1];
+              const curr = this.segments[i];
+              const angle = atan2(prev.y - curr.y, prev.x - curr.x);
+              curr.x = prev.x - cos(angle) * 15;
+              curr.y = prev.y - sin(angle) * 15;
+          }
 
-function head(x, y, rotation) {
-  fill(255, 0, 0); // Set the fill color to red
-  stroke('pink');
-  noStroke(); // Disable stroke (borders)
+          // Reset position if the snake moves off the top of the canvas
+          if (this.segments[0].y < -30) {
+              const newX = random(width);
+              const newY = height + 30;
+              for (let i = 0; i < this.segments.length; i++) {
+                  this.segments[i].x = newX - i * 15;
+                  this.segments[i].y = newY;
+              }
+          }
+        }
 
-  // Draw the left ellipse rotated by -10 degrees (counterclockwise)
-  push();
-  translate(x, y); // Move to the center of the ellipse
-  rotate(radians(-10 + rotation)); // Apply the rotation
-  ellipse(0, 0, 12, 30); // Draw the ellipse at the rotated position
-  pop();
+        display() {
+          // Display each segment
+          for (let segment of this.segments) {
+            segment.display();
+          }
 
-  // Draw the right ellipse rotated by 10 degrees (clockwise)
-  push();
-  translate(x + 5, y); // Move to the center of the ellipse
-  rotate(radians(10 + rotation)); // Apply the rotation
-  ellipse(0, 0, 12, 30); // Draw the ellipse at the rotated position
-  pop();
+          // Display the head (optional)
+          this.segments[0].display();
+          head(this.segments[0].x, this.segments[0].y-25, 10);
+        }
+      }
 
-  circle(x + 2, y - 6, 14); // Draw the central circle (nose)
+      function mousePressed() {
+        noLoop();  // Stops the draw loop (animation)
+      }
 
-  // Draw the circles below the ellipses
-  ellipse(x - 3, y + 10, 18, 30); // Left circle
+      function head(x, y, rotation) {
+        fill(255, 0, 0); 
+        stroke('pink');
+        noStroke();
 
-  // Draw the arc for the left side of the mouth
-  arc(x - 7, y + 4, 26, 48, radians(280), radians(132));
+        push();
+        translate(x, y);
+        rotate(radians(-10 + rotation));
+        ellipse(0, 0, 12, 30);
+        pop();
 
-  // Draw the arc for the right side of the mouth
-  arc(x + 13, y + 4, 24, 47, radians(60), radians(258));
+        push();
+        translate(x + 5, y);
+        rotate(radians(10 + rotation));
+        ellipse(0, 0, 12, 30);
+        pop();
 
-  ellipse(x + 9, y + 11, 18, 30); // Right circle
+        circle(x + 2, y - 6, 14);
 
-  // Draw the horn on the left side
-  drawHorn(x - 68, y - 30, 13, false); // Left side horn
-  drawHorn(x - 50, y - 40, 17, false); // Inner left
+        ellipse(x - 3, y + 10, 18, 30); 
 
-  drawHorn(x + 11, y - 20, 9, true); // Outer right
-  drawHorn(x - 3, y - 27, 11, true); // Inner right
-}
+        arc(x - 7, y + 4, 26, 48, radians(280), radians(132));
 
-function drawHorn(x, y, angle, flip, scale) {
-  let scaleFactor = 0.8 * scale; // Adjust the scaling factor based on the `scale` parameter
-  
-  let horn_pox = x - 10;
-  let horn2_pox = x + 11;
+        arc(x + 13, y + 4, 24, 47, radians(60), radians(258));
 
-  // Protect the transformations with push() and pop() to avoid affecting the other shapes
-  
-  // Draw the first curly shape near the left horn (or flipped)
-  push(); // Save current state
-  translate(horn_pox + 18, y + 4); // Translate to the correct position
-  if (flip){
-    drawCurly(-27, 17, angle, 0.5, true, 'red', 3); 
-    
-  } else {// Apply flip only to this shape
-    drawCurly(0, 0, angle - 5, 0.75, false, 'red', 4);
-  }// Draw the curly shape
-  pop(); // Restore original state
-  
-  // Draw the second curly shape near the right horn (or flipped)
-  push(); // Save current state
-  translate(horn2_pox, y - 20); // Translate to the correct position
-  if (flip){
-    drawCurly(-47, 0, angle+6, 1, true, 'red', 2.5); 
-    
-  } else {
-    drawCurly(0, 0, angle + 5, 1, false, 'red', 2.5); // Draw the curly shape
-  }pop(); // Restore original state
-  
-  // Optionally draw other shapes (e.g., another curly shape)
-  // drawCurly(x-4, y-32, angle+4, 1.1, false, 255, 255, 2)
-}
-function drawCurly(x, y, angle, scaleFactor = 2, flip = false, strokeColor = 'blue', strokeWidth) {
-  let points = [68, 45, 69, 52, 68, 55, 65, 61.5, 64, 66, 66, 70.5,
-                70, 77, 71, 83, 71, 89];
+        ellipse(x + 9, y + 11, 18, 30); 
 
-  // Scale points
-  for (let i = 0; i < points.length; i++) {
-    points[i] *= scaleFactor;
-  }
+        drawHorn(x - 68, y - 30, 13, false); 
+        drawHorn(x - 50, y - 40, 17, false);
 
-  // Adjust position
-  for (let i = 0; i < points.length; i += 2) {
-    points[i] += x;
-    points[i + 1] += y;
-  }
+        drawHorn(x + 11, y - 20, 9, true); 
+        drawHorn(x - 3, y - 27, 11, true);
+      }
 
-  // Apply rotation and flip
-  let rotatedPoints = [];
-  for (let i = 0; i < points.length; i += 2) {
-    let xPos = points[i];
-    let yPos = points[i + 1];
-    let rotatedX = xPos * cos(radians(angle)) - yPos * sin(radians(angle));
-    let rotatedY = xPos * sin(radians(angle)) + yPos * cos(radians(angle));
-    if (flip) rotatedX = -rotatedX; // Flip the x-coordinate if necessary
-    rotatedPoints.push(rotatedX, rotatedY);
-  }
+      function drawHorn(x, y, angle, flip, scale) {
+        let scaleFactor = 0.8 * scale; 
+        
+        let horn_pox = x - 10;
+        let horn2_pox = x + 11;
 
-  // Set colors and stroke
-  noFill()
-  stroke(strokeColor);
-  strokeWeight(int(strokeWidth));
+        push();
+        translate(horn_pox + 18, y + 4);
+        if (flip){
+          drawCurly(-27, 17, angle, 0.5, true, 'red', 3); 
+        } else {
+          drawCurly(0, 0, angle - 5, 0.75, false, 'red', 4);
+        }
+        pop();
 
-  // Draw shape
-  push();
-  beginShape();
-  for (let i = 0; i < rotatedPoints.length; i += 2) {
-    curveVertex(rotatedPoints[i], rotatedPoints[i + 1]);
-  }
-  endShape();
-  pop();
-}
+        push();
+        translate(horn2_pox, y - 20);
+        if (flip){
+          drawCurly(-47, 0, angle+6, 1, true, 'red', 2.5); 
+        } else {
+          drawCurly(0, 0, angle + 5, 1, false, 'red', 2.5);
+        }
+        pop();
+      }
+
+      function drawCurly(x, y, angle, scaleFactor = 2, flip = false, strokeColor = 'blue', strokeWidth) {
+        let points = [68, 45, 69, 52, 68, 55, 65, 61.5, 64, 66, 66, 70.5,
+                      70, 77, 71, 83, 71, 89];
+
+        for (let i = 0; i < points.length; i++) {
+          points[i] *= scaleFactor;
+        }
+
+        for (let i = 0; i < points.length; i += 2) {
+          points[i] += x;
+          points[i + 1] += y;
+        }
+
+        let rotatedPoints = [];
+        for (let i = 0; i < points.length; i += 2) {
+          let xPos = points[i];
+          let yPos = points[i + 1];
+          let rotatedX = xPos * cos(radians(angle)) - yPos * sin(radians(angle));
+          let rotatedY = xPos * sin(radians(angle)) + yPos * cos(radians(angle));
+          if (flip) rotatedX = -rotatedX; 
+          rotatedPoints.push(rotatedX, rotatedY);
+        }
+
+        noFill();
+        stroke(strokeColor);
+        strokeWeight(int(strokeWidth));
+
+        push();
+        beginShape();
+        for (let i = 0; i < rotatedPoints.length; i += 2) {
+          curveVertex(rotatedPoints[i], rotatedPoints[i + 1]);
+        }
+        endShape();
+        pop();
+      }
     </script>
-
-    <script src="js/script.js"></script>
   </body>
 </html>
