@@ -39,7 +39,7 @@
       }
 
       function getOddLength() {
-        let l = random(3, 13);
+        let l = random(7, 19);
         if (l % 2 == 1) {
           l += 1;
         }
@@ -158,7 +158,7 @@
 
           // Display the head (optional)
           this.segments[0].display();
-          head(this.segments[0].x, this.segments[0].y-25, 10);
+          head(this.segments[0].x, this.segments[0].y-25, 10,this.color);
         }
       }
 
@@ -166,11 +166,9 @@
         noLoop();  // Stops the draw loop (animation)
       }
 
-      function head(x, y, rotation) {
-        fill(255, 0, 0); 
-        stroke('pink');
-        noStroke();
-
+      function head(x, y, rotation,color) {
+        fill(color); 
+        
         push();
         translate(x, y);
         rotate(radians(-10 + rotation));
@@ -193,14 +191,14 @@
 
         ellipse(x + 9, y + 11, 18, 30); 
 
-        drawHorn(x - 68, y - 30, 13, false); 
-        drawHorn(x - 50, y - 40, 17, false);
+        drawHorn(x - 68, y - 30, 13, false,color); 
+        drawHorn(x - 50, y - 40, 17, false,color);
 
-        drawHorn(x + 11, y - 20, 9, true); 
-        drawHorn(x - 3, y - 27, 11, true);
+        drawHorn(x + 11, y - 20, 9, true,color); 
+        drawHorn(x - 3, y - 27, 11, true,color);
       }
 
-      function drawHorn(x, y, angle, flip, scale) {
+      function drawHorn(x, y, angle, flip, scale,colorH) {
         let scaleFactor = 0.8 * scale; 
         
         let horn_pox = x - 10;
@@ -209,23 +207,23 @@
         push();
         translate(horn_pox + 18, y + 4);
         if (flip){
-          drawCurly(-27, 17, angle, 0.5, true, 'red', 3); 
+          drawCurly(-27, 17, angle, 0.5, true, str(colorH), 3); 
         } else {
-          drawCurly(0, 0, angle - 5, 0.75, false, 'red', 4);
+          drawCurly(0, 0, angle - 5, 0.75, false, colorH, 4);
         }
         pop();
 
         push();
         translate(horn2_pox, y - 20);
         if (flip){
-          drawCurly(-47, 0, angle+6, 1, true, 'red', 2.5); 
+          drawCurly(-47, 0, angle+6, 1, true, colorH, 2.5); 
         } else {
-          drawCurly(0, 0, angle + 5, 1, false, 'red', 2.5);
+          drawCurly(0, 0, angle + 5, 1, false, colorH, 2.5);
         }
         pop();
       }
 
-      function drawCurly(x, y, angle, scaleFactor = 2, flip = false, strokeColor = 'blue', strokeWidth) {
+      function drawCurly(x, y, angle, scaleFactor = 2, flip = false, strokeColor, strokeWidth) {
         let points = [68, 45, 69, 52, 68, 55, 65, 61.5, 64, 66, 66, 70.5,
                       70, 77, 71, 83, 71, 89];
 
@@ -249,7 +247,7 @@
         }
 
         noFill();
-        stroke(strokeColor);
+        stroke(str(strokeColor));
         strokeWeight(int(strokeWidth));
 
         push();
