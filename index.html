@@ -121,8 +121,8 @@
         display() {
           this.snake.display(); // Display the snake, which also includes the head
 
-          this.drawHorn(this.snake.segments[0].x, this.snake.segments[0].y - 30, 30, false, 1, this.snakeColor);
-          this.drawHorn(this.snake.segments[0].x, this.snake.segments[0].y - 30, -30, true, 1, this.snakeColor);
+          this.drawHorn(this.snake.segments[0].x-70, this.snake.segments[0].y - 60,13, false, 1, this.snakeColor);
+          this.drawHorn(this.snake.segments[0].x+2, this.snake.segments[0].y - 41, 17, true, 1, this.snakeColor);
   
         }
 
@@ -136,18 +136,18 @@
           push();
           translate(horn_pox + 18, y + 4);
           if (flip) {
-            this.drawCurly(-27, 17, angle, 0.5, true, colorH, 3); 
+            this.drawCurly(-59, -8, angle-9.5, 0.75, true, colorH, 3); 
           } else {
-            this.drawCurly(0, 0, angle - 5, 0.75, false, 'limegreen', 4);
+            this.drawCurly(-3, 0, angle - 8, 0.75, false, colorH, 3);
           }
           pop();
 
           push();
           translate(horn2_pox, y - 20);
           if (flip) {
-            this.drawCurly(-47, 0, angle + 6, 1, true, 'red', 2.5); 
+            this.drawCurly(-47, 0, angle + 6, 1, true, colorH, 2.5); 
           } else {
-            this.drawCurly(0, 0, angle + 5, 1, false, 'blue', 2.5);
+            this.drawCurly(0, 0, angle + 5, 1, false, colorH, 2.5);
           }
           pop();
         }
@@ -210,8 +210,16 @@
           const dx = sin(this.zigzagAngle) * 2; // Zigzag horizontally
           const dy = -1; // Move upward
 
+          // Increase the zigzag effect lower down the body
+          for (let i = 0; i < this.segments.length; i++) {
+            const segment = this.segments[i];
+            
+            // Increase the zigzag effect as the segments move lower
+            const zigzagFactor = map(i, 0, this.segments.length - 1, 2, 5); // Increase effect with lower segments
+            segment.x += sin(this.zigzagAngle) * zigzagFactor;
+          }
+
           // Move the head of the snake
-          this.segments[0].x += dx;
           this.segments[0].y += dy;
 
           // Update the positions of the other segments to follow the head
@@ -220,7 +228,7 @@
             const curr = this.segments[i];
             const angle = atan2(prev.y - curr.y, prev.x - curr.x);
             curr.x = prev.x - cos(angle) * 15;
-            curr.y = prev.y - sin(angle) * 15;  
+            curr.y = prev.y - sin(angle) * 15;
           }
 
           // Reset position if the snake moves off the top of the canvas
