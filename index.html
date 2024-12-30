@@ -114,6 +114,7 @@
           this.snakeColor = color(random(255, 255), random(0, 20), random(0, 20)); // Assign color here
           this.speed  = random(.5,2);
           this.snake = new Snake(x, y, length,this.snakeColor,this.speed); // The dragon contains a snake
+          this.clawSectionIndex = 3;
         }
 
         move() {
@@ -125,18 +126,21 @@
 
           this.drawHorn(this.snake.segments[0].x-70, this.snake.segments[0].y - 60,13, false, 1, this.snakeColor);
           this.drawHorn(this.snake.segments[0].x+2, this.snake.segments[0].y - 41, 17, true, 1, this.snakeColor);
-          this.drawClaw(this.snake.segments[0].x-10,this.snake.segments[3].y-15);
+          //this.drawClaw(this.snake.segments[0].x-10,this.snake.segments[3].y-15);
+           // Ensure the claw is within the bounds of the segments array
+          if (this.clawSectionIndex < this.snake.segments.length) {
+              const clawSegment = this.snake.segments[this.clawSectionIndex];
+            this.drawClaw(clawSegment.x - 24, clawSegment.y,this.snakeColor);
+          }
+
           this.snake.display(); // Display the snake, which also includes the head
-  
         }
 
-        drawClaw(x, y) {
-        
+        drawClaw(x, y,color) {
           noStroke();
-
-          // Draw the base part of the claw
-          fill('red');
-          ellipse(x, y, 8, 20); // Main body
+          fill(color);
+          // Main claw body
+          ellipse(x, y, 8, 20); 
 
           // Draw the connecting arm
           push();
@@ -171,6 +175,17 @@
           rotate(radians(10)); // Rotate clockwise
           triangle(-2, -2, 0, 2, -1, -7); // Right claw
           pop();
+
+          // Add arcs on top of the claw body
+          fill('gold');
+          // Arc positions calculated relative to the ellipse
+          arc(x+2, y-1 , 6,5, radians(90), radians(270)); // Top-left arc
+          arc(x+2, y+4, 6,5, radians(90), radians(270)); // Bottom-left arc
+
+          fill(color);
+          // Slightly larger arcs for another layer
+          arc(x + 2, y-1,4,4, radians(90), radians(270)); // Top-right arc
+          arc(x + 2, y + 4, 4,3, radians(90), radians(270)); // Bottom-right arc
         }
 
 
@@ -263,7 +278,7 @@
 
           // Move the head of the snake
           this.segments[0].x += dx;
-          this.segments[0].y += dy;
+          this.segments[0].y += dy-10;
 
           // Update the positions of the other segments to follow the head
           for (let i = 1; i < this.segments.length; i++) {
