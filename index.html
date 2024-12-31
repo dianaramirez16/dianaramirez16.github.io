@@ -142,7 +142,7 @@
 
               this.drawClaw(secondSegment.x-24, secondSegment.y,this.snakeColor,false);
               this.drawClaw(secondSegment.x+8, secondSegment.y+2,this.snakeColor,true);
-
+              this.drawWhisker(this.snake.segments[0].x+76, this.snake.segments[0].y+15, 'red',150);
           }
 
           this.snake.display(); // Display the snake, which also includes the head
@@ -252,6 +252,34 @@
           
         }
 
+        drawWhisker(x, y, strokeColor, rotation) {
+          let points = [27, 5, 29, 12, 29, 15, 25, 21.5, 24, 26, 26, 30.5, 30, 37, 31, 43, 30, 48, 26, 54, 23, 60, 22, 65, 23, 71, 25, 73, 29, 75, 31, 75];
+          let thickpoints = [31, 45, 30, 50, 26, 56, 23, 62, 22, 67, 23, 73, 25, 75, 29, 77, 31, 77];
+
+          noFill();
+          stroke(strokeColor);
+
+          push();
+          translate(x, y); // Move to the specified position
+          rotate(radians(rotation)); // Apply rotation
+
+          // Draw the main shape
+          beginShape();
+          for (let i = points.length - 2; i >= 0; i -= 2) {
+            curveVertex(points[i], points[i + 1]); // Use the original points
+          }
+          endShape();
+
+          // Optionally, draw another shape using `thickpoints` or others
+          // For example:
+          beginShape();
+          for (let i = thickpoints.length - 2; i >= 0; i -= 2) {
+            curveVertex(thickpoints[i], thickpoints[i + 1]); // Use the original thickpoints
+          }
+          endShape();
+
+          pop();
+        }
 
 
 
@@ -281,7 +309,6 @@
           pop();
         }
 
-        // Method to draw the curly part of the horns
         drawCurly(x, y, angle, scaleFactor = 2, flip = false, strokeColor, strokeWidth) {
           let points = [68, 45, 69, 52, 68, 55, 65, 61.5, 64, 66, 66, 70.5,
                         70, 77, 71, 83, 71, 89];
