@@ -16,7 +16,7 @@ function setup() {
     }
 
     for(let i=0;i<5;i++){
-        clouds.push(new Cloud(x,y))
+        clouds.push(new Cloud(200,200))
     }
     
 }
@@ -43,52 +43,44 @@ function draw() {
         cloud.display();
     }
 }
-
-class Cloud{
-    constructor(x,y){
-        this.color="red";
-        this.fill=(255,240,245);
-        this.x=this.x;
-        this.y=this.y;
-      
+class Cloud {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
     }
 
-    display(){
-        this.drawCloud1();
-        rect(400,400,40,40);
-    }
-
-    drawCloud1(){
-      roll1 = new(Roll(this.x,this.y,'orange'))
-      rect(200,200,40,40);
+    display() {
+        fill(255, 255, 255, 200); // White color with slight transparency
+        noStroke();
+        ellipse(this.x, this.y, 60, 40); // Main body of the cloud
+        ellipse(this.x + 20, this.y + 10, 50, 30);
+        ellipse(this.x - 20, this.y + 10, 50, 30);
     }
 }
 
 class Roll {
-    constructor(x,y,color){
-        this.x=x;
-        this.y=y;
-        this.color=color;
-        this.angle =0.0;
-        this.offset =60;
-        this.scalar =2;
-        this.speed = .5;
+    constructor(x, y, color, strokeWidth) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        this.angle = 0.0;
+        this.offset = 6;
+        this.scalar = 2;
+        this.speed = 0.5;
+        this.strokeWidth = strokeWidth;
     }
 
-     display(){
-        this.bigRoll(this.x,this.y,this.color);
-     }
+    display() {
+        noStroke();
+        fill(this.color);
+        ellipse(this.x, this.y, 10, 10);
+    }
 
-     bigRoll(x,y,color){
-        this.speed=0;
-        var x = offset + console(angle)*scalar;
-        var y = offset + sin(angle) * scalar;
-        ellipse(x+100,y+100,2,2);
-        //ellipseMode(CENTER)
-        if (speed<50){
-        angle+=speed;
-        scalar+=speed;
-     }
+    bigRoll() {
+        let x = this.offset + cos(this.angle) * this.scalar;
+        let y = this.offset + sin(this.angle) * this.scalar;
+        ellipse(this.x + x, this.y + y, 5, 5);
+        this.angle += this.speed;
     }
 }
 
