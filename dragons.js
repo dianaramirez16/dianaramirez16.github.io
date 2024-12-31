@@ -1,4 +1,5 @@
 let dragons = [];
+let clouds=[];
 
 function setup() {
     const canvas = createCanvas(1000, 490);
@@ -13,7 +14,7 @@ function setup() {
         dragons.push(new Dragon(random(width), random(height), l));
         l = getOddLength();
     }
-    drawCloud();
+    
 }
 
 function getOddLength() {
@@ -25,14 +26,49 @@ function getOddLength() {
 }
 
 function draw() {  
-background(255,240,245,210);
+    background(255,240,245,210);
 
 
-// Update and display each dragon
-for (let dragon of dragons) {
-    dragon.move();
-    dragon.display();
+    // Update and display each dragon
+    for (let dragon of dragons) {
+        dragon.move();
+        dragon.display();
+    }
+    
+    for(let cloud of clouds){
+        cloud.display();
+    }
 }
+
+class Cloud{
+    constructor(x,y){
+        this.color="red";
+        this.fill=(255,240,245);
+        this.x=this.x;
+        this.y=this.y;
+        this.angle =0.0;
+        this.offset =60;
+        var scalar =2;
+        var speed = 1;
+    }
+
+    display(){
+        this.drawCloud1();
+    }
+
+    drawCloud1(){
+      
+    
+        var x = offset + console(angle)*scalar;
+        var y = offset + sin(angle) * scalar;
+        ellipse(x+100,y+100,2,2);
+        //ellipseMode(CENTER)
+        if (speed<50){
+        angle+=speed;
+        scalar+=speed;
+        }
+    }
+
 
 }
 
