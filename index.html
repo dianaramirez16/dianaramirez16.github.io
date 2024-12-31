@@ -132,7 +132,7 @@
               const clawSegment = this.snake.segments[this.clawSectionIndex];
               //const claw2 = this.snake.segments[this.clawSectionIndex];
               this.drawClaw(clawSegment.x-24, clawSegment.y,this.snakeColor,false);
-              this.drawClaw(clawSegment.x +47, clawSegment.y,'blue',true);
+              this.drawClaw(clawSegment.x+8, clawSegment.y+2,this.snakeColor,true);
           }
 
           this.snake.display(); // Display the snake, which also includes the head
@@ -155,40 +155,40 @@
 
             // Draw the arm muscle
             push();
-            translate(x + 9, y - 2); // Position relative to the claw's base
+            translate(x + 9, y); // Position relative to the claw's base
             rotate(radians(-65)); // Tilted muscle
             ellipse(0, 0, 6, 16); // Muscle
             pop();
 
             // Draw the claws
-            fill('orange');
+            fill('gold');
             // Left claw (rotated -15 degrees)
             push();
-            translate(x + 19, y - 5); // Position relative to the claw's base
+            translate(x + 17, y - 5); // Position relative to the claw's base
             rotate(radians(-15)); // Rotate counterclockwise
             triangle(-1, 1, 1, -1, 1, -7); // Left claw
             pop();
 
             // Middle claw (unchanged)
-            triangle(x + 22, y - 7, x + 24, y - 8, x + 23, y - 16);
+            triangle(x + 18, y - 7, x + 20, y - 8, x + 19, y - 16);
 
             // Right claw (rotated +10 degrees)
             push();
-            translate(x + 27, y - 5); // Position relative to the claw's base
+            translate(x + 22, y -7); // Position relative to the claw's base
             rotate(radians(10)); // Rotate clockwise
             triangle(-2, -2, 0, 2, -1, -7); // Right claw
             pop();
 
             // Add arcs on top of the claw body
-            fill('gold');
+            fill('orange');
             // Arc positions calculated relative to the ellipse
-            arc(x + 25, y - 1, 6, 5, radians(90), radians(270)); // Top-left arc
-            arc(x + 25, y + 4, 6, 5, radians(90), radians(270)); // Bottom-left arc
+            arc(x + 19, y - 1, 6, 5, radians(270), radians(90)); // Top-left arc
+            arc(x + 19, y + 4, 6, 5, radians(270), radians(90)); // Bottom-left arc
 
             fill(color);
             // Slightly larger arcs for another layer
-            arc(x + 25, y - 1, 4, 4, radians(90), radians(270)); // Top-right arc
-            arc(x + 25, y + 4, 4, 3, radians(90), radians(270)); // Bottom-right arc
+            arc(x + 19, y - 1, 4, 4, radians(270), radians(90)); // Top-right arc
+            arc(x + 19, y + 4, 4, 3, radians(270), radians(90)); // Bottom-right arc
 
 
           }
@@ -209,7 +209,7 @@
             pop();
 
             // Draw the claws
-            fill('white');
+            fill('orange');
 
             // Left claw (rotated -15 degrees)
             push();
