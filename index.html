@@ -29,7 +29,7 @@
         const canvas = createCanvas(1000, 490);
         pixelDensity(2);
         canvas.parent('myCanvas');
-        background(255);
+        background(255,245,235);
 
         // Create multiple dragons
         let l = getOddLength();
@@ -48,7 +48,7 @@
       }
 
       function draw() {  
-        background(255,210);
+        background(255,240,245,210);
 
 
         // Update and display each dragon
@@ -127,8 +127,6 @@
         }
 
         display() {
-         
-
           this.drawHorn(this.snake.segments[0].x-70, this.snake.segments[0].y - 60,13, false, 1, this.snakeColor);
           this.drawHorn(this.snake.segments[0].x+2, this.snake.segments[0].y - 41, 17, true, 1, this.snakeColor);
           //this.drawClaw(this.snake.segments[0].x-10,this.snake.segments[3].y-15);
@@ -142,7 +140,8 @@
 
               this.drawClaw(secondSegment.x-24, secondSegment.y,this.snakeColor,false);
               this.drawClaw(secondSegment.x+8, secondSegment.y+2,this.snakeColor,true);
-              this.drawWhisker(this.snake.segments[0].x+76, this.snake.segments[0].y+15, 'red',150);
+              this.drawWhisker(this.snake.segments[0].x+60, this.snake.segments[0].y-4 , 'red',radians(145),.75,false,2);
+              this.drawWhisker(this.snake.segments[0].x-52, this.snake.segments[0].y-9 , 'red',radians(215),.75,true,2);
           }
 
           this.snake.display(); // Display the snake, which also includes the head
@@ -252,16 +251,23 @@
           
         }
 
-        drawWhisker(x, y, strokeColor, rotation) {
+        drawWhisker(x, y, strokeColor, rotation, scaleFactor, flip = false, strokeWidth = 1) {
           let points = [27, 5, 29, 12, 29, 15, 25, 21.5, 24, 26, 26, 30.5, 30, 37, 31, 43, 30, 48, 26, 54, 23, 60, 22, 65, 23, 71, 25, 73, 29, 75, 31, 75];
-          let thickpoints = [31, 45, 30, 50, 26, 56, 23, 62, 22, 67, 23, 73, 25, 75, 29, 77, 31, 77];
+          let thickpoints = [26, 30.5, 30, 37,31, 45, 30, 50, 26, 56, 23, 62, 22, 67, 23, 73, 25, 75, 29, 77, 31, 77];
 
           noFill();
           stroke(strokeColor);
+          
 
           push();
           translate(x, y); // Move to the specified position
-          rotate(radians(rotation)); // Apply rotation
+          rotate(rotation); // Apply rotation
+          scale(scaleFactor); // Apply scaling
+
+          // Apply flipping if enabled
+          if (flip) {
+            scale(-1, 1); // Flip horizontally
+          }
 
           // Draw the main shape
           beginShape();
@@ -270,16 +276,17 @@
           }
           endShape();
 
-          // Optionally, draw another shape using `thickpoints` or others
-          // For example:
+          strokeWeight(strokeWidth); // Set stroke width
+          // Draw another shape using `thickpoints`
           beginShape();
           for (let i = thickpoints.length - 2; i >= 0; i -= 2) {
-            curveVertex(thickpoints[i], thickpoints[i + 1]); // Use the original thickpoints
+            curveVertex(thickpoints[i], thickpoints[i + 1]); // Use the thickpoints
           }
           endShape();
 
           pop();
         }
+
 
 
 
