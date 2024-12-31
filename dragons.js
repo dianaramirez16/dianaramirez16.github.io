@@ -14,6 +14,10 @@ function setup() {
         dragons.push(new Dragon(random(width), random(height), l));
         l = getOddLength();
     }
+
+    for(let i=0;i<5;i++){
+        clouds.push(new Cloud(x,y))
+    }
     
 }
 
@@ -27,14 +31,14 @@ function getOddLength() {
 
 function draw() {  
     background(255,240,245,210);
-
+   
 
     // Update and display each dragon
     for (let dragon of dragons) {
         dragon.move();
         dragon.display();
     }
-    
+    //draw clouds above the dragons
     for(let cloud of clouds){
         cloud.display();
     }
@@ -46,19 +50,37 @@ class Cloud{
         this.fill=(255,240,245);
         this.x=this.x;
         this.y=this.y;
-        this.angle =0.0;
-        this.offset =60;
-        var scalar =2;
-        var speed = 1;
+      
     }
 
     display(){
         this.drawCloud1();
+        rect(400,400,40,40);
     }
 
     drawCloud1(){
-      
-    
+      roll1 = new(Roll(this.x,this.y,'orange'))
+      rect(200,200,40,40);
+    }
+}
+
+class Roll {
+    constructor(x,y,color){
+        this.x=x;
+        this.y=y;
+        this.color=color;
+        this.angle =0.0;
+        this.offset =60;
+        this.scalar =2;
+        this.speed = .5;
+    }
+
+     display(){
+        this.bigRoll(this.x,this.y,this.color);
+     }
+
+     bigRoll(x,y,color){
+        this.speed=0;
         var x = offset + console(angle)*scalar;
         var y = offset + sin(angle) * scalar;
         ellipse(x+100,y+100,2,2);
@@ -66,10 +88,8 @@ class Cloud{
         if (speed<50){
         angle+=speed;
         scalar+=speed;
-        }
+     }
     }
-
-
 }
 
 class Ball {
