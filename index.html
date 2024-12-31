@@ -130,16 +130,23 @@
            // Ensure the claw is within the bounds of the segments array
           if (this.clawSectionIndex < this.snake.segments.length) {
               const clawSegment = this.snake.segments[this.clawSectionIndex];
-            this.drawClaw(clawSegment.x - 24, clawSegment.y,this.snakeColor);
+              //const claw2 = this.snake.segments[this.clawSectionIndex];
+              this.drawClaw(clawSegment.x-24, clawSegment.y,this.snakeColor,false);
+              this.drawClaw(clawSegment.x +47, clawSegment.y,'blue',true);
           }
 
           this.snake.display(); // Display the snake, which also includes the head
         }
 
-        drawClaw(x, y,color) {
+        drawClaw(x, y, color,flip=false) {
+          
           noStroke();
           fill(color);
           // Main claw body
+
+          if (flip){
+            ellipse(x+67, y, 8, 20); 
+          }
           ellipse(x, y, 8, 20); 
 
           // Draw the connecting arm
