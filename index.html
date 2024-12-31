@@ -114,7 +114,12 @@
           this.snakeColor = color(random(255, 255), random(0, 20), random(0, 20)); // Assign color here
           this.speed  = random(.5,2);
           this.snake = new Snake(x, y, length,this.snakeColor,this.speed); // The dragon contains a snake
-          this.clawSectionIndex = 3;
+          if (length<9){
+            this.clawSectionIndex=2;
+          } else {
+            this.clawSectionIndex = 3;
+          }
+          this.secondClaws = int(length*2/3);
         }
 
         move() {
@@ -130,9 +135,14 @@
            // Ensure the claw is within the bounds of the segments array
           if (this.clawSectionIndex < this.snake.segments.length) {
               const clawSegment = this.snake.segments[this.clawSectionIndex];
+              const secondSegment = this.snake.segments[this.secondClaws];
               //const claw2 = this.snake.segments[this.clawSectionIndex];
               this.drawClaw(clawSegment.x-24, clawSegment.y,this.snakeColor,false);
               this.drawClaw(clawSegment.x+8, clawSegment.y+2,this.snakeColor,true);
+
+              this.drawClaw(secondSegment.x-24, secondSegment.y,this.snakeColor,false);
+              this.drawClaw(secondSegment.x+8, secondSegment.y+2,this.snakeColor,true);
+
           }
 
           this.snake.display(); // Display the snake, which also includes the head
