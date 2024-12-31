@@ -1,25 +1,27 @@
 let dragons = [];
 
 function setup() {
-const canvas = createCanvas(1000, 490);
-pixelDensity(2);
-canvas.parent('myCanvas');
-background(255,245,235);
+    const canvas = createCanvas(1000, 490);
+    pixelDensity(2);
+    canvas.parent('myCanvas');
 
-// Create multiple dragons
-let l = getOddLength();
-for (let i = 0; i < l; i++) {
-    dragons.push(new Dragon(random(width), random(height), l));
-    l = getOddLength();
-}
+    background(255,245,235);
+
+    // Create multiple dragons
+    let l = getOddLength();
+    for (let i = 0; i < l; i++) {
+        dragons.push(new Dragon(random(width), random(height), l));
+        l = getOddLength();
+    }
+    drawCloud();
 }
 
 function getOddLength() {
-let l = random(7, 19);
-if (l % 2 == 1) {
-    l += 1;
-}
-return l;
+    let l = random(7, 19);
+    if (l % 2 == 1) {
+        l += 1;
+    }
+    return l;
 }
 
 function draw() {  
@@ -31,6 +33,7 @@ for (let dragon of dragons) {
     dragon.move();
     dragon.display();
 }
+
 }
 
 class Ball {
@@ -252,7 +255,7 @@ drawWhisker(x, y, strokeColor, rotation, scaleFactor, flip = false, strokeWidth 
     endShape();
 
     strokeWeight(strokeWidth); // Set stroke width
-    // Draw another shape using `thickpoints`
+    
     beginShape();
     for (let i = thickpoints.length - 2; i >= 0; i -= 2) {
     curveVertex(thickpoints[i], thickpoints[i + 1]); // Use the thickpoints
