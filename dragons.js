@@ -1,12 +1,14 @@
 let dragons = [];
 let clouds=[];
 
+let rolls = []; // To manage Roll objects independently
+
 function setup() {
     const canvas = createCanvas(1000, 490);
     pixelDensity(2);
     canvas.parent('myCanvas');
 
-    background(255,245,235);
+    background(255, 245, 235);
 
     // Create multiple dragons
     let l = getOddLength();
@@ -15,10 +17,12 @@ function setup() {
         l = getOddLength();
     }
 
-    for(let i=0;i<5;i++){
-        clouds.push(new Cloud(200,200))
+    // Create multiple clouds and associated rolls
+    for (let i = 0; i < 5; i++) {
+        let cloud = new Cloud(random(width), random(height));
+        clouds.push(cloud);
+        rolls.push(new Roll(cloud.x, cloud.y, 'violet', 4)); // Associate rolls with cloud positions
     }
-    
 }
 
 function getOddLength() {
@@ -29,20 +33,26 @@ function getOddLength() {
     return l;
 }
 
-function draw() {  
-    background(255,240,245,210);
-   
+function draw() {
+    background(255, 240, 245, 210);
 
     // Update and display each dragon
     for (let dragon of dragons) {
         dragon.move();
         dragon.display();
     }
-    //draw clouds above the dragons
-    for(let cloud of clouds){
+
+    // Draw clouds
+    for (let cloud of clouds) {
         cloud.display();
     }
+
+    // Draw rolls (on top of clouds)
+    for (let roll of rolls) {
+        roll.display(); // Ensure the roll is displayed and updated
+    }
 }
+
 class Cloud {
     constructor(x, y) {
         this.x = x;
@@ -66,23 +76,20 @@ class Roll {
         this.angle = 0.0;
         this.offset = 6;
         this.scalar = 2;
-        this.speed = 0.5;
+        this.speed = 0.05;
         this.strokeWidth = strokeWidth;
     }
 
     display() {
         noStroke();
         fill(this.color);
-        ellipse(this.x, this.y, 10, 10);
-    }
-
-    bigRoll() {
         let x = this.offset + cos(this.angle) * this.scalar;
         let y = this.offset + sin(this.angle) * this.scalar;
         ellipse(this.x + x, this.y + y, 5, 5);
-        this.angle += this.speed;
+        this.angle += this.speed; // Update angle for animation
     }
 }
+
 
 class Ball {
 constructor(x, y, r, color) {
