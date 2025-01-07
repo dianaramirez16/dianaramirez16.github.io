@@ -178,6 +178,20 @@ display() {
     }
 
     this.snake.display(); // Display the snake, which also includes the head
+
+     
+    //let scaleFactor = 4;
+    //let smallListSize=this.segments[0].length; // find inner list size
+    //let beginShrink = smallListSize/4; //find segment to size down
+   /* 
+    for (let i = this.segments.length - 1; i >= 0; i--) {
+        
+            if (i<5){
+                scale(scaleFactor)
+                this.segments[i].display();
+                scaleFactor = scaleFactor-.15;
+            }
+    }*/
 }
 
 drawClaw(x, y, color,flip=false) {
@@ -394,9 +408,20 @@ constructor(x, y, length,color,speed) {
     this.segments = [];
     this.speed=speed;
     this.color = color;
+
+    let shrinksize=2;
+
     for (let i = 0; i < length; i++) {
-    this.segments.push(new Ball(x - i * 26, y+500, 21, this.color)); // Pass the snake color to each Ball
+
+        let ball = new Ball(x - i * 26, y+500, 21-shrinksize, this.color);
+
+        if (i>length/2){
+            shrinksize+=1
+        }
+        this.segments.push(ball); 
+        
     }
+
     this.xSpeed = random(1, 4);
     this.ySpeed = random(-1, 2);
     this.zigzagAngle = 0;
@@ -431,16 +456,18 @@ move() {
     }
 }
 
-display() {
-    // Display each segment
+    display() {
+
+    // Display each segment (one snake)
     for (let i = this.segments.length - 1; i >= 0; i--) {
-    this.segments[i].display();
+        this.segments[i].display(); 
+        
     }
 
-    // Display the head
-    this.segments[0].display();
-    head(this.segments[0].x, this.segments[0].y - 30, 10, this.color);
-}
+
+        // Display the head
+        head(this.segments[0].x, this.segments[0].y - 30, 10, this.color);
+    }
 }
 
 function mousePressed() {
