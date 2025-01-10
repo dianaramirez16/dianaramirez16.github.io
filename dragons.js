@@ -28,7 +28,7 @@ function setup() {
         }
         let y = random(height);   //save the random variables then reuse for rolls
         clouds.push(new Cloud(x, y));
-        rolls.push(new Roll(x, y, 'red', 2));
+        rolls.push(new Roll(x, y, 'red', 20));
     }
 }
 
@@ -82,22 +82,24 @@ class Roll {
         this.x = x;
         this.y = y;
         this.color = color;
-        this.angle = 0.0;
+        this.angle = 0.0; // Initial angle for the spiral
+        this.radius = 10; // Base radius for the spiral
         this.offset = 6;
         this.scalar = 2;
-        this.speed = 0.05;
+        this.speed = 0.05; // Controls how fast the spiral grows
         this.strokeWidth = strokeWidth;
     }
 
     display() {
         push();
         noFill();
-        stroke('red');
-        strokeWeight(this.strokeWidth);
-        translate(this.x, this.y);
+        stroke(this.color); // Use the color provided in the constructor
+        strokeWeight(1);
 
-        rect(this.x,this.y,10,10)
-
+        translate(this.x, this.y); // Shift the coordinate system to (this.x, this.y)
+        
+       
+        // Draw the spiral
         beginShape();
         for (let t = 0; t < this.angle; t += 0.1) {
             let r = this.radius + t * 2; // Spiral radius increases over time
@@ -106,18 +108,14 @@ class Roll {
             vertex(x, y);
         }
         endShape();
+
         pop();
     }
 
     move() {
-     // Slowly increase the angle for animation
-     this.angle += 0.1;
-
-     // Limit the radius of the spiral for a smooth appearance
-     if (this.angle > TWO_PI * 5) {
-         this.angle = TWO_PI * 5; // Stop growing after a few loops
-     }
+        this.angle += this.speed; // Increment the angle to animate the spiral
     }
+    
 }   
 
 
