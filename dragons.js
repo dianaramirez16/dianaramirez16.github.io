@@ -1,6 +1,5 @@
 let dragons = [];
 let clouds=[];
-
 let rolls = []; // To manage Roll objects independently
 
 function setup() {
@@ -18,10 +17,18 @@ function setup() {
     }
 
     // Create multiple clouds and associated rolls
-    for (let i = 0; i < 5; i++) {
-        let cloud = new Cloud(random(width), random(height));
-        clouds.push(cloud);
-        rolls.push(new Roll(cloud.x, cloud.y, 'violet', 4)); // Associate rolls with cloud positions
+    for (let i = 0; i < 10; i++) {
+        let x;
+        if (random() < 0.5) {
+            // 50% chance for x to be in range 0-100
+            x = random(0, 100);
+        } else {
+            // 50% chance for x to be in range 500-600
+            x = random(800,1000);
+        }
+        let y = random(height);   //save the random variables then reuse for rolls
+        clouds.push(new Cloud(x, y));
+        rolls.push(new Roll(x, y, 'red', 2));
     }
 }
 
@@ -34,7 +41,7 @@ function getOddLength() {
 }
 
 function draw() {
-    background(255, 240, 245, 210);
+    background(255, 240, 245);
 
     // Update and display each dragon
     for (let dragon of dragons) {
@@ -47,10 +54,11 @@ function draw() {
         cloud.display();
     }
 
-    // Draw rolls (on top of clouds)
-    for (let roll of rolls) {
-        roll.display(); // Ensure the roll is displayed and updated
+    for (let roll of rolls){
+        roll.move(); // Animate the spiral
+        roll.display();
     }
+   
 }
 
 class Cloud {
@@ -60,11 +68,12 @@ class Cloud {
     }
 
     display() {
-        fill(255, 255, 255, 200); // White color with slight transparency
+        fill(255, 255, 255); // White color with slight transparency
         noStroke();
         ellipse(this.x, this.y, 60, 40); //CLOUD BASE****
         ellipse(this.x + 20, this.y + 10, 50, 30);
         ellipse(this.x - 20, this.y + 10, 50, 30);
+
     }
 }
 
@@ -81,66 +90,86 @@ class Roll {
     }
 
     display() {
-        //noStroke();
-        fill(this.color);
-        let x = this.offset + cos(this.angle) * this.scalar;
-        let y = this.offset + sin(this.angle) * this.scalar;
-        ellipse(this.x + x, this.y + y, 5,16); //layer for spiral
-        
-        this.angle += this.speed; // Update angle for animation
+        push();
+        noFill();
+        stroke('red');
+        strokeWeight(this.strokeWidth);
+        translate(this.x, this.y);
+
+        rect(this.x,this.y,10,10)
+
+        beginShape();
+        for (let t = 0; t < this.angle; t += 0.1) {
+            let r = this.radius + t * 2; // Spiral radius increases over time
+            let x = r * cos(t);
+            let y = r * sin(t);
+            vertex(x, y);
+        }
+        endShape();
+        pop();
     }
-}
+
+    move() {
+     // Slowly increase the angle for animation
+     this.angle += 0.1;
+
+     // Limit the radius of the spiral for a smooth appearance
+     if (this.angle > TWO_PI * 5) {
+         this.angle = TWO_PI * 5; // Stop growing after a few loops
+     }
+    }
+}   
 
 
 class Ball {
-constructor(x, y, r, color) {
-    this.x = x;
-    this.y = y;
-    this.r = r + 3;
-    this.color = color;  // Set the color when the Ball is created
-}
+    constructor(x, y, r, color) {
+        this.x = x;
+        this.y = y;
+        this.r = r + 3;
+        this.color = color;  // Set the color when the Ball is created
+    }
 
-display() {
-    noStroke();
-    fill(this.color); // Use the color passed into the constructor
-    ellipse(this.x, this.y, this.r+5);
-    rect(this.x - this.r / 2 + 2, this.y - this.r / 2, this.r - 2, this.r - 5,.5);
-    this.drawMultipleArcs(this.x, this.y - 3);
-    this.drawRowThree(this.x, this.y - 3);
-    this.drawMultipleArcs(this.x, this.y + 8);
-    this.drawRowThree(this.x, this.y +8);
-}
+    display() {
+        noStroke();
+        fill(this.color); // Use the color passed into the constructor
+        ellipse(this.x, this.y, this.r+5);
+        rect(this.x - this.r / 2 + 2, this.y - this.r / 2, this.r - 2, this.r - 5,.5);
+        this.drawMultipleArcs(this.x, this.y - 3);
+        this.drawRowThree(this.x, this.y - 3);
+        this.drawMultipleArcs(this.x, this.y + 8);
+        this.drawRowThree(this.x, this.y +8);
+    }
 
-// Function to draw multiple arcs with two colors, ensuring they stay within the radius
-drawMultipleArcs(x, y) {
-    // Draw the first arc (color 1)
-    fill('gold');
-    arc(x - 5, y - 4, this.r / 2.5, this.r / 2.5, radians(0), radians(180));
-    arc(x + 4, y - 4, this.r / 2.5, this.r / 2.5, radians(0), radians(180));
+    // Function to draw multiple arcs with two colors, ensuring they stay within the radius
+    drawMultipleArcs(x, y) {
+        // Draw the first arc (color 1)
+        fill('gold');
+        arc(x - 5, y - 4, this.r / 2.5, this.r / 2.5, radians(0), radians(180));
+        arc(x + 4, y - 4, this.r / 2.5, this.r / 2.5, radians(0), radians(180));
 
-    // Draw the second arc (color 2)
-    fill(this.color);
-    arc(x - 5, y - 4, this.r / 3.5, this.r / 3.5, radians(0), radians(180));
-    arc(x + 4, y - 4, this.r / 3.5, this.r / 3.5, radians(0), radians(180));
-}
+        // Draw the second arc (color 2)
+        fill(this.color);
+        arc(x - 5, y - 4, this.r / 3.5, this.r / 3.5, radians(0), radians(180));
+        arc(x + 4, y - 4, this.r / 3.5, this.r / 3.5, radians(0), radians(180));
+    }
 
-// Function to draw a row of arcs with a more constrained layout
-drawRowThree(x, y) {
-    const offsetY = 1; // Vertical offset to prevent arcs from overlapping the top part of the ball
-    const maxXOffset = this.r / 3.5; // Limit horizontal movement within radius
+    // Function to draw a row of arcs with a more constrained layout
+    drawRowThree(x, y) {
+        const offsetY = 1; // Vertical offset to prevent arcs from overlapping the top part of the ball
+        const maxXOffset = this.r / 3.5; // Limit horizontal movement within radius
 
-    // Draw first set of arcs (green)
-    fill('gold');
-    arc(x - maxXOffset, y + offsetY - 1, this.r / 2.5, this.r / 1.5, radians(0), radians(180));
-    arc(x, y + offsetY - 1, this.r / 2.5, this.r / 1.5, radians(0), radians(180));
-    arc(x + maxXOffset, y + offsetY - 1, this.r / 2.5, this.r / 1.5, radians(0), radians(180));
+        // Draw first set of arcs (green)
+        fill('gold');
+        arc(x - maxXOffset, y + offsetY - 1, this.r / 2.5, this.r / 1.5, radians(0), radians(180));
+        arc(x, y + offsetY - 1, this.r / 2.5, this.r / 1.5, radians(0), radians(180));
+        arc(x + maxXOffset, y + offsetY - 1, this.r / 2.5, this.r / 1.5, radians(0), radians(180));
 
-    // Draw second set of arcs (purple)
-    fill(this.color);
-    arc(x - maxXOffset, y + offsetY, this.r / 3.5, this.r / 2.5, radians(0), radians(180));
-    arc(x, y + offsetY, this.r / 3.5, this.r / 2.5, radians(0), radians(180));
-    arc(x + maxXOffset, y + offsetY, this.r / 3.5, this.r / 2.5, radians(0), radians(180));
-}
+        // Draw second set of arcs (purple)
+        fill(this.color);
+        arc(x - maxXOffset, y + offsetY, this.r / 3.5, this.r / 2.5, radians(0), radians(180));
+        arc(x, y + offsetY, this.r / 3.5, this.r / 2.5, radians(0), radians(180));
+        arc(x + maxXOffset, y + offsetY, this.r / 3.5, this.r / 2.5, radians(0), radians(180));
+    }
 }
 
 class Dragon {
