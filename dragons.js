@@ -62,7 +62,7 @@ class Cloud {
     display() {
         fill(255, 255, 255, 200); // White color with slight transparency
         noStroke();
-        ellipse(this.x, this.y, 60, 40); // Main body of the cloud
+        ellipse(this.x, this.y, 60, 40); //CLOUD BASE****
         ellipse(this.x + 20, this.y + 10, 50, 30);
         ellipse(this.x - 20, this.y + 10, 50, 30);
     }
@@ -81,11 +81,12 @@ class Roll {
     }
 
     display() {
-        noStroke();
+        //noStroke();
         fill(this.color);
         let x = this.offset + cos(this.angle) * this.scalar;
         let y = this.offset + sin(this.angle) * this.scalar;
-        ellipse(this.x + x, this.y + y, 5, 5);
+        ellipse(this.x + x, this.y + y, 5,16); //layer for spiral
+        
         this.angle += this.speed; // Update angle for animation
     }
 }
