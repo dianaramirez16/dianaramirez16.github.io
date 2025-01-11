@@ -65,6 +65,7 @@ class Cloud {
     constructor(x, y) {
         this.x = x;
         this.y = y;
+        this.leftCloud = ellipse(this.x - 20, this.y + 10, 50, 30);
     }
 
     display() {
@@ -72,8 +73,7 @@ class Cloud {
         noStroke();
         ellipse(this.x, this.y, 60, 40); //CLOUD BASE****
         ellipse(this.x + 20, this.y + 10, 50, 30);
-        ellipse(this.x - 20, this.y + 10, 50, 30);
-
+        
     }
 }
 
@@ -98,7 +98,7 @@ class Roll {
 
         translate(this.x, this.y); // Shift the coordinate system to (this.x, this.y)
         
-       
+        //TODO: limit the spiral and change position to next cloud
         // Draw the spiral
         beginShape();
         for (let t = 0; t < this.angle; t += 0.1) {
@@ -181,6 +181,7 @@ constructor(x, y, length) {
     this.clawSectionIndex = 3;
     }
     this.secondClaws = int(length*2/3);
+    this.length=length;
 }
 
 move() {
@@ -188,23 +189,26 @@ move() {
 }
 
 display() {
+    console.log(Dragon.length);
     this.drawHorn(this.snake.segments[0].x-70, this.snake.segments[0].y - 60,13, false, 1, this.snakeColor);
     this.drawHorn(this.snake.segments[0].x+2, this.snake.segments[0].y - 41, 17, true, 1, this.snakeColor);
     //this.drawClaw(this.snake.segments[0].x-10,this.snake.segments[3].y-15);
     // Ensure the claw is within the bounds of the segments array
+    const tailIndex = this.snake.segments[this.length-1];
+    
     if (this.clawSectionIndex < this.snake.segments.length) {
         const clawSegment = this.snake.segments[this.clawSectionIndex];
-        const secondSegment = this.snake.segments[this.secondClaws];
-        //const claw2 = this.snake.segments[this.clawSectionIndex];
+    const secondSegment = this.snake.segments[this.secondClaws];
         this.drawClaw(clawSegment.x-24, clawSegment.y,this.snakeColor,false);
         this.drawClaw(clawSegment.x+8, clawSegment.y+2,this.snakeColor,true);
-
         this.drawClaw(secondSegment.x-24, secondSegment.y,this.snakeColor,false);
         this.drawClaw(secondSegment.x+8, secondSegment.y+2,this.snakeColor,true);
         this.drawWhisker(this.snake.segments[0].x+60, this.snake.segments[0].y-4 , 'red',radians(145),.75,false,2);
         this.drawWhisker(this.snake.segments[0].x-52, this.snake.segments[0].y-9 , 'red',radians(215),.75,true,2);
+        
     }
-
+    this.drawTail(500,250,'darkblue');
+    
     this.snake.display(); // Display the snake, which also includes the head
 
      
@@ -389,6 +393,19 @@ drawHorn(x, y, angle, flip, scale, colorH) {
     this.drawCurly(0, 0, angle + 5, 1, false, colorH, 2.5);
     }
     pop();
+}
+
+drawTail(x,y,color){
+    
+    
+    noFill(); // Set the fill color
+    push();
+    this.drawCurly(x,y,90,2,false,color,30);
+    pop();
+    
+    rect(x,y,30,30)
+    
+   
 }
 
 drawCurly(x, y, angle, scaleFactor = 2, flip = false, strokeColor, strokeWidth) {
