@@ -188,7 +188,7 @@ move() {
 }
 
 display() {
-    this.drawHorn(this.snake.segments[0].x-70, this.snake.segments[0].y - 60,13, false, 1, this.snakeColor);
+    this.drawHorn(this.snake.segments[0].x-67, this.snake.segments[0].y - 60,15, false, 1, this.snakeColor);
     this.drawHorn(this.snake.segments[0].x+2, this.snake.segments[0].y - 41, 17, true, 1, this.snakeColor);
     //this.drawClaw(this.snake.segments[0].x-10,this.snake.segments[3].y-15);
     // Ensure the claw is within the bounds of the segments array
@@ -201,7 +201,7 @@ display() {
 
         this.drawClaw(secondSegment.x-24, secondSegment.y,this.snakeColor,false);
         this.drawClaw(secondSegment.x+8, secondSegment.y+2,this.snakeColor,true);
-        this.drawWhisker(this.snake.segments[0].x+60, this.snake.segments[0].y-4 , 'red',radians(145),.75,false,2);
+        this.drawWhisker(this.snake.segments[0].x+60, this.snake.segments[0].y-9 , 'red',radians(145),.75,false,2);
         this.drawWhisker(this.snake.segments[0].x-52, this.snake.segments[0].y-9 , 'red',radians(215),.75,true,2);
     }
 
@@ -521,9 +521,10 @@ circle(x + 2, y - 6, 14);
 
 ellipse(x - 3, y + 10, 18, 30); 
 
-arc(x - 7, y + 4, 26, 48, radians(280), radians(132));
 
-arc(x + 13, y + 4, 24, 47, radians(60), radians(258));
+arc(x - 7, y+8, 26, 48, radians(280), radians(132));
+
+arc(x + 15, y+8, 24, 47, radians(60), radians(258));
 
 ellipse(x + 9, y + 11, 18, 30); 
 }
