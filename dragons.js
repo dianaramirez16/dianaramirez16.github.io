@@ -83,10 +83,10 @@ class Roll {
         this.y = y;
         this.color = color;
         this.angle = 0.0; // Initial angle for the spiral
-        this.radius = 10; // Base radius for the spiral
-        this.offset = 6;
-        this.scalar = 2;
-        this.speed = 0.05; // Controls how fast the spiral grows
+        this.radius = 1; // Base radius for the spiral
+        this.offset = 0.1;
+        this.scalar = 1;
+        this.speed = 0.03; // Controls how fast the spiral grows
         this.strokeWidth = strokeWidth;
     }
 
@@ -101,12 +101,15 @@ class Roll {
        
         // Draw the spiral
         beginShape();
-        for (let t = 0; t < this.angle; t += 0.1) {
-            let r = this.radius + t * 2; // Spiral radius increases over time
-            let x = r * cos(t);
-            let y = r * sin(t);
-            vertex(x, y);
+        if (this.radius<5){
+            for (let t = 0; t < this.angle; t += 0.01) {
+                let r = this.radius + t * .9; // Spiral radius increases over time
+                let x = r * cos(t);
+                let y = r * sin(t);
+                vertex(x, y);
+            }
         }
+       
         endShape();
 
         pop();
