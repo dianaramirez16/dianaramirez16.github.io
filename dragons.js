@@ -65,12 +65,12 @@ class Cloud {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.rightCloud = new Roll(x+20, y+10, 'red', 20, 10);
+        this.rightCloud = new Roll(x+20, y+10, 'red', 20, 9.5);
         rolls.push(this.rightCloud);
-        this.leftCloud = new Roll(x, y, 'red', 20,10);
-        rolls.push(this.leftCloud);
-        this.centerCloud = new Roll(x-20, y+10, 'red', 20,18);
+        this.centerCloud = new Roll(x, y, 'red', 20,18);
         rolls.push(this.centerCloud);
+        this.leftCloud = new Roll(x-20, y+10, 'red', 20,11);
+        rolls.push(this.leftCloud);
     }
 
     display() {
