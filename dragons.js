@@ -28,7 +28,7 @@ function setup() {
         }
         let y = random(height);   //save the random variables then reuse for rolls
         clouds.push(new Cloud(x, y));
-        rolls.push(new Roll(x, y, 'red', 20));
+        
     }
 }
 
@@ -65,6 +65,12 @@ class Cloud {
     constructor(x, y) {
         this.x = x;
         this.y = y;
+        this.rightCloud = new Roll(x+20, y+10, 'red', 20, 10);
+        rolls.push(this.rightCloud);
+        this.leftCloud = new Roll(x, y, 'red', 20,10);
+        rolls.push(this.leftCloud);
+        this.centerCloud = new Roll(x-20, y+10, 'red', 20,18);
+        rolls.push(this.centerCloud);
     }
 
     display() {
@@ -73,12 +79,11 @@ class Cloud {
         ellipse(this.x, this.y, 60, 40); //CLOUD BASE****
         ellipse(this.x + 20, this.y + 10, 50, 30);
         ellipse(this.x - 20, this.y + 10, 50, 30);
-
     }
 }
 
 class Roll {
-    constructor(x, y, color, strokeWidth) {
+    constructor(x, y, color, strokeWidth, rollSize) {
         this.x = x;
         this.y = y;
         this.color = color;
@@ -88,6 +93,7 @@ class Roll {
         this.scalar = 1;
         this.speed = 0.03; // Controls how fast the spiral grows
         this.strokeWidth = strokeWidth;
+        this.rollSize = rollSize;
     }
 
     display() {
@@ -97,24 +103,22 @@ class Roll {
         strokeWeight(1);
 
         translate(this.x, this.y); // Shift the coordinate system to (this.x, this.y)
-        
-       
         // Draw the spiral
         beginShape();
-        if (this.radius<5){
-            for (let t = 0; t < this.angle; t += 0.01) {
-                let r = this.radius + t * .9; // Spiral radius increases over time
+        
+        for (let t = 0; t < this.angle; t += 0.01) {
+            let r = this.radius + t * .9; 
+            if (r<this.rollSize){
+                // Spiral radius increases over time
                 let x = r * cos(t);
                 let y = r * sin(t);
                 vertex(x, y);
-            }
+            } 
         }
-       
+        //rollSize=0
         endShape();
-
         pop();
     }
-
     move() {
         this.angle += this.speed; // Increment the angle to animate the spiral
     }
@@ -455,7 +459,7 @@ constructor(x, y, length,color,speed) {
 
     this.xSpeed = random(1, 4);
     this.ySpeed = random(-1, 2);
-    this.zigzagAngle = 0;
+    this.zigzagAngle = 0; 
 }
 
 move() {
