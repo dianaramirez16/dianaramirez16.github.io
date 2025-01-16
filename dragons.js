@@ -65,20 +65,25 @@ class Cloud {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.rightCloud = new Roll(x+20, y+10, 'red', 20, 9.5);
-        rolls.push(this.rightCloud);
-        this.centerCloud = new Roll(x, y, 'red', 20,18);
-        rolls.push(this.centerCloud);
-        this.leftCloud = new Roll(x-20, y+10, 'red', 20,11);
-        rolls.push(this.leftCloud);
+        this.rightRoll = new Roll(x+26, y+10, 'red', 10, 12.6);
+        rolls.push(this.rightRoll);
+        this.centerRoll = new Roll(x, y, 'red', 20,17.8);
+        rolls.push(this.centerRoll);
+        this.leftRoll = new Roll(x-22, y+10, 'red', 20,11.1);
+        rolls.push(this.leftRoll);
     }
 
     display() {
+        fill(255,0,0);
+        ellipse(this.x+4, this.y, 64, 48); //CLOUD Borders
+        ellipse(this.x + 26, this.y + 10, 53, 35);
+        ellipse(this.x - 20, this.y + 10, 53, 35);
         fill(255, 255, 255); // White color with slight transparency
-        noStroke();
-        ellipse(this.x, this.y, 60, 40); //CLOUD BASE****
-        ellipse(this.x + 20, this.y + 10, 50, 30);
-        ellipse(this.x - 20, this.y + 10, 50, 30);
+        
+        ellipse(this.x+4, this.y, 60, 46); //CLOUD BASE****
+        ellipse(this.x + 26, this.y + 10, 50, 32);
+        ellipse(this.x - 20, this.y + 10, 50, 32);
+       
     }
 }
 
