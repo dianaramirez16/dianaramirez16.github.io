@@ -8,7 +8,7 @@ function setup() {
     canvas.parent('myCanvas');
 
     background(255, 245, 235);
-
+    
     // Create multiple dragons
     let l = getOddLength();
     for (let i = 0; i < l; i++) {
@@ -30,6 +30,8 @@ function setup() {
         clouds.push(new Cloud(x, y));
         
     }
+
+
 }
 
 function getOddLength() {
@@ -43,6 +45,15 @@ function getOddLength() {
 function draw() {
     background(255, 240, 245);
 
+    
+    fill('lightblue')
+    //draw background hills and skyscape
+  
+    arc(400, 500, 80, 300, radians(180), radians(360));
+    arc(200, 500, 80, 600, radians(180), radians(360));
+    arc(240, 500, 60, 200, radians(180), radians(360));
+    arc(170, 500, 100, 500, radians(180), radians(360));
+    
     // Update and display each dragon
     for (let dragon of dragons) {
         dragon.move();
@@ -58,6 +69,8 @@ function draw() {
         roll.move(); // Animate the spiral
         roll.display();
     }
+
+    
    
 }
 
@@ -65,7 +78,7 @@ class Cloud {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.rightRoll = new Roll(x+26, y+10, 'red', 10, 12.6);
+        this.rightRoll = new Roll(x+25, y+9, 'red', 10, 12.6);
         rolls.push(this.rightRoll);
         this.centerRoll = new Roll(x, y, 'red', 20,17.8);
         rolls.push(this.centerRoll);
