@@ -54,6 +54,12 @@ function draw() {
     arc(240, 500, 60, 200, radians(180), radians(360));
     arc(170, 500, 100, 500, radians(180), radians(360));
     
+    arc(800, 500, 80, 300, radians(180), radians(360));
+    arc(600, 500, 80, 600, radians(180), radians(360));
+    arc(640, 500, 60, 200, radians(180), radians(360));
+    arc(570, 500, 100, 500, radians(180), radians(360));
+    
+
     // Update and display each dragon
     for (let dragon of dragons) {
         dragon.move();
