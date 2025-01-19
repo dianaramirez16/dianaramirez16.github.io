@@ -43,17 +43,17 @@ function draw() {
     background(255, 240, 245);
 
     
-    fill('lightblue')
+    fill('darkgrey')
     //draw background hills and skyscape
   
-    arc(400, 500, 80, 300, radians(180), radians(360));
-    arc(200, 500, 80, 600, radians(180), radians(360));
-    arc(240, 500, 60, 200, radians(180), radians(360));
-    arc(170, 500, 100, 500, radians(180), radians(360));
+    arc(400, 500, 800, 300, radians(180), radians(360));
+    arc(200, 500, 580, 600, radians(180), radians(360));
+    arc(240, 500, 660, 200, radians(180), radians(360));
+    arc(170, 500, 300, 500, radians(180), radians(360));
     
-    arc(800, 500, 80, 300, radians(180), radians(360));
-    arc(600, 500, 80, 600, radians(180), radians(360));
-    arc(640, 500, 60, 200, radians(180), radians(360));
+    arc(800, 500, 20, 300, radians(180), radians(360));
+    arc(600, 500, 180, 600, radians(180), radians(360));
+    arc(640, 500, 160, 200, radians(180), radians(360));
     arc(570, 500, 100, 500, radians(180), radians(360));
     
 
