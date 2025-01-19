@@ -28,7 +28,7 @@ function setup() {
         }
         let y = random(height);   //save the random variables then reuse for rolls
         clouds.push(new Cloud(x, y));
-        rolls.push(new Roll(x, y, 'red', 20));
+        
     }
 }
 
@@ -66,6 +66,12 @@ class Cloud {
         this.x = x;
         this.y = y;
         this.leftCloud = ellipse(this.x - 20, this.y + 10, 50, 30);
+        this.rightCloud = new Roll(x+20, y+10, 'red', 20, 9.5);
+        rolls.push(this.rightCloud);
+        this.centerCloud = new Roll(x, y, 'red', 20,18);
+        rolls.push(this.centerCloud);
+        this.leftCloud = new Roll(x-20, y+10, 'red', 20,11);
+        rolls.push(this.leftCloud);
     }
 
     display() {
@@ -74,20 +80,22 @@ class Cloud {
         ellipse(this.x, this.y, 60, 40); //CLOUD BASE****
         ellipse(this.x + 20, this.y + 10, 50, 30);
         
+        ellipse(this.x - 20, this.y + 10, 50, 30);
     }
 }
 
 class Roll {
-    constructor(x, y, color, strokeWidth) {
+    constructor(x, y, color, strokeWidth, rollSize) {
         this.x = x;
         this.y = y;
         this.color = color;
         this.angle = 0.0; // Initial angle for the spiral
-        this.radius = 10; // Base radius for the spiral
-        this.offset = 6;
-        this.scalar = 2;
-        this.speed = 0.05; // Controls how fast the spiral grows
+        this.radius = 1; // Base radius for the spiral
+        this.offset = 0.1;
+        this.scalar = 1;
+        this.speed = 0.03; // Controls how fast the spiral grows
         this.strokeWidth = strokeWidth;
+        this.rollSize = rollSize;
     }
 
     display() {
@@ -101,17 +109,20 @@ class Roll {
         //TODO: limit the spiral and change position to next cloud
         // Draw the spiral
         beginShape();
-        for (let t = 0; t < this.angle; t += 0.1) {
-            let r = this.radius + t * 2; // Spiral radius increases over time
-            let x = r * cos(t);
-            let y = r * sin(t);
-            vertex(x, y);
+        
+        for (let t = 0; t < this.angle; t += 0.01) {
+            let r = this.radius + t * .9; 
+            if (r<this.rollSize){
+                // Spiral radius increases over time
+                let x = r * cos(t);
+                let y = r * sin(t);
+                vertex(x, y);
+            } 
         }
+        //rollSize=0
         endShape();
-
         pop();
     }
-
     move() {
         this.angle += this.speed; // Increment the angle to animate the spiral
     }
@@ -191,6 +202,7 @@ move() {
 display() {
     console.log(Dragon.length);
     this.drawHorn(this.snake.segments[0].x-70, this.snake.segments[0].y - 60,13, false, 1, this.snakeColor);
+    this.drawHorn(this.snake.segments[0].x-67, this.snake.segments[0].y - 60,15, false, 1, this.snakeColor);
     this.drawHorn(this.snake.segments[0].x+2, this.snake.segments[0].y - 41, 17, true, 1, this.snakeColor);
     //this.drawClaw(this.snake.segments[0].x-10,this.snake.segments[3].y-15);
     // Ensure the claw is within the bounds of the segments array
@@ -203,7 +215,7 @@ display() {
         this.drawClaw(clawSegment.x+8, clawSegment.y+2,this.snakeColor,true);
         this.drawClaw(secondSegment.x-24, secondSegment.y,this.snakeColor,false);
         this.drawClaw(secondSegment.x+8, secondSegment.y+2,this.snakeColor,true);
-        this.drawWhisker(this.snake.segments[0].x+60, this.snake.segments[0].y-4 , 'red',radians(145),.75,false,2);
+        this.drawWhisker(this.snake.segments[0].x+60, this.snake.segments[0].y-9 , 'red',radians(145),.75,false,2);
         this.drawWhisker(this.snake.segments[0].x-52, this.snake.segments[0].y-9 , 'red',radians(215),.75,true,2);
         
     }
@@ -469,7 +481,7 @@ constructor(x, y, length,color,speed) {
 
     this.xSpeed = random(1, 4);
     this.ySpeed = random(-1, 2);
-    this.zigzagAngle = 0;
+    this.zigzagAngle = 0; 
 }
 
 move() {
@@ -538,9 +550,10 @@ circle(x + 2, y - 6, 14);
 
 ellipse(x - 3, y + 10, 18, 30); 
 
-arc(x - 7, y + 4, 26, 48, radians(280), radians(132));
 
-arc(x + 13, y + 4, 24, 47, radians(60), radians(258));
+arc(x - 7, y+8, 26, 48, radians(280), radians(132));
+
+arc(x + 15, y+8, 24, 47, radians(60), radians(258));
 
 ellipse(x + 9, y + 11, 18, 30); 
 }
