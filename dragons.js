@@ -450,7 +450,34 @@ drawTail(x,y,color){
 
     x+=30;
     fill('gold');
-    triangle(x-5,y+20,    x-10,y-10,    x-3,y-10)
+    triangle(x-2,y-2,    x-6,y-12,    x+2,y-12)
+
+    fill(color);
+    triangle(x-2,y-4,    x-7,y-15,    x+3,y-15)
+    
+    x+=5
+    y+=15
+    fill('gold');
+    triangle(x-2,y-2,    x-6,y-12,    x+2,y-12)
+
+    fill(color);
+    triangle(x-2,y-4,    x-7,y-15,    x+3,y-15)
+
+    x-=4
+    y+=15
+    fill('gold');
+    triangle(x-2,y,    x-6,y-12,    x+2,y-12)
+
+    fill(color);
+    triangle(x-2,y-2,    x-7,y-15,    x+3,y-15)
+
+    x+=1.3
+    y+=18
+    fill('gold');
+    triangle(x-2,y,    x-6,y-10,    x+2,y-10)
+
+    fill(color);
+    triangle(x-2,y-2,    x-7,y-12,    x+3,y-12)
 }
 
 drawCurly(x, y, angle, scaleFactor = 2, flip = false, strokeColor, strokeWidth) {
