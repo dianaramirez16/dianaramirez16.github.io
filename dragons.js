@@ -222,7 +222,7 @@ move() {
 }
 
 display() {
-    console.log(Dragon.length);
+    //console.log(Dragon.length);
     this.drawHorn(this.snake.segments[0].x-70, this.snake.segments[0].y - 60,13, false, 1, this.snakeColor);
     this.drawHorn(this.snake.segments[0].x-67, this.snake.segments[0].y - 60,15, false, 1, this.snakeColor);
     this.drawHorn(this.snake.segments[0].x+2, this.snake.segments[0].y - 41, 17, true, 1, this.snakeColor);
@@ -232,7 +232,7 @@ display() {
     
     if (this.clawSectionIndex < this.snake.segments.length) {
         const clawSegment = this.snake.segments[this.clawSectionIndex];
-    const secondSegment = this.snake.segments[this.secondClaws];
+        const secondSegment = this.snake.segments[this.secondClaws];
         this.drawClaw(clawSegment.x-24, clawSegment.y,this.snakeColor,false);
         this.drawClaw(clawSegment.x+8, clawSegment.y+2,this.snakeColor,true);
         this.drawClaw(secondSegment.x-24, secondSegment.y,this.snakeColor,false);
@@ -241,10 +241,10 @@ display() {
         this.drawWhisker(this.snake.segments[0].x-52, this.snake.segments[0].y-9 , 'red',radians(215),.75,true,2);
         
     }
-    this.drawTail(500,250,'darkblue');
+    
     
     this.snake.display(); // Display the snake, which also includes the head
-
+    this.drawTail(700,250,'darkblue');
      
     //let scaleFactor = 4;
     //let smallListSize=this.segments[0].length; // find inner list size
@@ -382,6 +382,7 @@ drawWhisker(x, y, strokeColor, rotation, scaleFactor, flip = false, strokeWidth 
     scale(-1, 1); // Flip horizontally
     }
 
+    strokeWeight(strokeWidth*.8);
     // Draw the main shape
     beginShape();
     for (let i = points.length - 2; i >= 0; i -= 2) {
@@ -400,9 +401,6 @@ drawWhisker(x, y, strokeColor, rotation, scaleFactor, flip = false, strokeWidth 
     pop();
 }
 
-
-
-
 drawHorn(x, y, angle, flip, scale, colorH) {
     let scaleFactor = 0.8 * scale; 
 
@@ -420,7 +418,7 @@ drawHorn(x, y, angle, flip, scale, colorH) {
     pop();
 
     push();
-    translate(horn2_pox, y - 20);
+    translate(horn2_pox,y  - 20);
     if (flip) {
     this.drawCurly(-47, 0, angle + 6, 1, true, colorH, 2.5); 
     } else {
@@ -431,15 +429,19 @@ drawHorn(x, y, angle, flip, scale, colorH) {
 
 drawTail(x,y,color){
     
+
+    noStroke();
+    fill(color);
+    ///order is bottom left, top left, top right, bottom right
+    quad(  x+26,y+70,    x+20,y-20,         x+40,y-20,   x+34 ,y+70  );
+    // bottom, right, left 
+    triangle(x+30,y+100,    x+45,y+65,    x+15,y+65);
+    arc(x+15, y+65, 15, 20, radians(180), radians(0));
     
-    noFill(); // Set the fill color
-    push();
-    this.drawCurly(x,y,90,2,false,color,30);
-    pop();
-    
-    rect(x,y,30,30)
-    
-   
+    x+=30;
+    fill('gold');
+    triangle(x-5,y+20,    x-10,y-10,    x-3,y-10)
+
 }
 
 drawCurly(x, y, angle, scaleFactor = 2, flip = false, strokeColor, strokeWidth) {
