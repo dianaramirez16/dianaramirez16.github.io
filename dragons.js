@@ -429,19 +429,28 @@ drawHorn(x, y, angle, flip, scale, colorH) {
 
 drawTail(x,y,color){
     
-
     noStroke();
     fill(color);
     ///order is bottom left, top left, top right, bottom right
-    quad(  x+26,y+70,    x+20,y-20,         x+40,y-20,   x+34 ,y+70  );
+    quad(x+26,y+70,x+20,y-20,x+40,y-20,x+34,y+70);
     // bottom, right, left 
-    triangle(x+30,y+100,    x+45,y+65,    x+15,y+65);
-    arc(x+15, y+65, 15, 20, radians(180), radians(0));
+    triangle(x+30,y+97,    x+20,y+65,    x+40,y+65);
+  
+    push();
+    translate(x + 24, y + 75); // Move origin to the arc’s center
+    rotate(radians(-23)); // Rotate counterclockwise by 10 degrees
+    arc(0, 0, 12, 40, radians(90), radians(0)); // Draw arc at the new origin
+    pop();
     
+    push();
+    translate(x + 36, y + 75); // Move origin to the arc’s center
+    rotate(radians(23)); // Rotate counterclockwise by 10 degrees
+    arc(0, 0, 12, 40, radians(180), radians(90)); // Draw arc at the new origin
+    pop();
+
     x+=30;
     fill('gold');
     triangle(x-5,y+20,    x-10,y-10,    x-3,y-10)
-
 }
 
 drawCurly(x, y, angle, scaleFactor = 2, flip = false, strokeColor, strokeWidth) {
