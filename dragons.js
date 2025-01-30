@@ -214,7 +214,7 @@ constructor(x, y, length) {
     this.clawSectionIndex = 3;
     }
     this.secondClaws = int(length*2/3);
-    this.length=length;
+    this.tailPlace = length;
 }
 
 move() {
@@ -222,11 +222,12 @@ move() {
 }
 
 display() {
-    //console.log(Dragon.length);
+    const tailSegment = int(max(0, min(this.tailPlace, this.snake.segments.length - 1)));
+    console.log(tailSegment);
     this.drawHorn(this.snake.segments[0].x-70, this.snake.segments[0].y - 60,13, false, 1, this.snakeColor);
     this.drawHorn(this.snake.segments[0].x-67, this.snake.segments[0].y - 60,15, false, 1, this.snakeColor);
     this.drawHorn(this.snake.segments[0].x+2, this.snake.segments[0].y - 41, 17, true, 1, this.snakeColor);
-    this.drawTail(this.snake.segments[9].x, this.snake.segments[9].y,this.snakeColor,.5);
+    this.drawTail(this.snake.segments[tailSegment].x-23, this.snake.segments[tailSegment].y,this.snakeColor,.8);
     //this.drawClaw(this.snake.segments[0].x-10,this.snake.segments[3].y-15);
     // Ensure the claw is within the bounds of the segments array
     
