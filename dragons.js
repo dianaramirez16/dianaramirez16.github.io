@@ -226,13 +226,14 @@ display() {
     this.drawHorn(this.snake.segments[0].x-70, this.snake.segments[0].y - 60,13, false, 1, this.snakeColor);
     this.drawHorn(this.snake.segments[0].x-67, this.snake.segments[0].y - 60,15, false, 1, this.snakeColor);
     this.drawHorn(this.snake.segments[0].x+2, this.snake.segments[0].y - 41, 17, true, 1, this.snakeColor);
+    this.drawTail(this.snake.segments[9].x, this.snake.segments[9].y,this.snakeColor,.5);
     //this.drawClaw(this.snake.segments[0].x-10,this.snake.segments[3].y-15);
     // Ensure the claw is within the bounds of the segments array
-    const tailIndex = this.snake.segments[this.length-1];
     
     if (this.clawSectionIndex < this.snake.segments.length) {
         const clawSegment = this.snake.segments[this.clawSectionIndex];
         const secondSegment = this.snake.segments[this.secondClaws];
+        
         this.drawClaw(clawSegment.x-24, clawSegment.y,this.snakeColor,false);
         this.drawClaw(clawSegment.x+8, clawSegment.y+2,this.snakeColor,true);
         this.drawClaw(secondSegment.x-24, secondSegment.y,this.snakeColor,false);
@@ -244,20 +245,6 @@ display() {
     
     
     this.snake.display(); // Display the snake, which also includes the head
-    this.drawTail(700,250,'darkblue');
-     
-    //let scaleFactor = 4;
-    //let smallListSize=this.segments[0].length; // find inner list size
-    //let beginShrink = smallListSize/4; //find segment to size down
-   /* 
-    for (let i = this.segments.length - 1; i >= 0; i--) {
-        
-            if (i<5){
-                scale(scaleFactor)
-                this.segments[i].display();
-                scaleFactor = scaleFactor-.15;
-            }
-    }*/
 }
 
 drawClaw(x, y, color,flip=false) {
@@ -427,57 +414,50 @@ drawHorn(x, y, angle, flip, scale, colorH) {
     pop();
 }
 
-drawTail(x,y,color){
-    
+drawTail(x, y, color, scaleFactor) {
+    push();
+    translate(x, y); // Move to the base position
+    scale(scaleFactor); // Apply scaling
+
     noStroke();
     fill(color);
-    ///order is bottom left, top left, top right, bottom right
-    quad(x+26,y+70,x+20,y-20,x+40,y-20,x+34,y+70);
-    // bottom, right, left 
-    triangle(x+30,y+97,    x+20,y+65,    x+40,y+65);
-  
+    // Quad (main tail structure)
+    quad(26, 70, 20, -20, 40, -20, 34, 70);
+
+    // Bottom triangle
+    triangle(30, 97, 20, 65, 40, 65);
+
+    // Left arc
     push();
-    translate(x + 24, y + 75); // Move origin to the arc’s center
-    rotate(radians(-23)); // Rotate counterclockwise by 10 degrees
-    arc(0, 0, 12, 40, radians(90), radians(0)); // Draw arc at the new origin
-    pop();
-    
-    push();
-    translate(x + 36, y + 75); // Move origin to the arc’s center
-    rotate(radians(23)); // Rotate counterclockwise by 10 degrees
-    arc(0, 0, 12, 40, radians(180), radians(90)); // Draw arc at the new origin
+    translate(24, 75);
+    rotate(radians(-23));
+    arc(0, 0, 12, 40, radians(90), radians(0));
     pop();
 
-    x+=30;
-    fill('gold');
-    triangle(x-2,y-2,    x-6,y-12,    x+2,y-12)
+    // Right arc
+    push();
+    translate(36, 75);
+    rotate(radians(23));
+    arc(0, 0, 12, 40, radians(180), radians(90));
+    pop();
 
-    fill(color);
-    triangle(x-2,y-4,    x-7,y-15,    x+3,y-15)
+    let tx = 30; // Offset for triangle pattern
+    let ty = 0;
     
-    x+=5
-    y+=15
-    fill('gold');
-    triangle(x-2,y-2,    x-6,y-12,    x+2,y-12)
+    for (let i = 0; i < 4; i++) {
+        fill('gold');
+        triangle(tx - 2, ty - 2, tx - 6, ty - 12, tx + 2, ty - 12);
+        
+        fill(color);
+        triangle(tx - 2, ty - 4, tx - 7, ty - 15, tx + 3, ty - 15);
+        
+        // Increment position for the next segment
+        if (i === 0) tx += 5, ty += 15;
+        else if (i === 1) tx -= 4, ty += 15;
+        else if (i === 2) tx += 1.3, ty += 18;
+    }
 
-    fill(color);
-    triangle(x-2,y-4,    x-7,y-15,    x+3,y-15)
-
-    x-=4
-    y+=15
-    fill('gold');
-    triangle(x-2,y,    x-6,y-12,    x+2,y-12)
-
-    fill(color);
-    triangle(x-2,y-2,    x-7,y-15,    x+3,y-15)
-
-    x+=1.3
-    y+=18
-    fill('gold');
-    triangle(x-2,y,    x-6,y-10,    x+2,y-10)
-
-    fill(color);
-    triangle(x-2,y-2,    x-7,y-12,    x+3,y-12)
+    pop(); // Restore previous transformations
 }
 
 drawCurly(x, y, angle, scaleFactor = 2, flip = false, strokeColor, strokeWidth) {
